@@ -1,5 +1,7 @@
 package br.senai.sp.informatica.mobile.bikemobi.util;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
@@ -9,7 +11,8 @@ import retrofit2.http.Headers;
 
 public interface RestInterface {
 
-//    @Headers({"Content-Type: application/json"})
-//    @GET("")
+    @Headers({"Content-Type: application/json"})
+    @GET("/api/perfil/todos")
+    Call<ResponseBody> perfil();
 
 }

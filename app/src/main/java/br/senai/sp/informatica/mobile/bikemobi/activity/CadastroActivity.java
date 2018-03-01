@@ -12,4 +12,9 @@ public class CadastroActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
     }
+
+    @Override
+    public void inicializarComponentes() {
+
+    }
 }
