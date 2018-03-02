@@ -1,8 +1,11 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,7 +16,9 @@ import java.io.IOException;
 import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.model.Indicadores;
 import br.senai.sp.informatica.mobile.bikemobi.util.RestInterface;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +37,9 @@ public class PerfilActivity extends BaseActivity {
     String sub_codigo;
     int quantidade = 0;
 
+    // Variáveis tela
+    NavigationView navigationView;
+
     JSONObject jsonobject;
 
     // Construtor API
@@ -44,29 +52,25 @@ public class PerfilActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
         inicializarComponentes();
     }
 
     public void inicializarComponentes() {
+        setupNavDrawer();
+        setupToolBar();
         apiPerfil();
     }
 
     private void apiPerfil() {
 
-//        SharedPreferences preferences = getSharedPreferences("bikemobi", MODE_PRIVATE);
-//        tokenAuth = preferences.getString("token", "");
-//
-//        OkHttpClient defaultHttpClient = new OkHttpClient.Builder().addInterceptor(
-//                new Interceptor() {
-//                    @Override
-//                    public okhttp3.Response intercept(Chain chain) throws IOException {
-//                        Request request = chain.request().newBuilder()
-//                                .addHeader("Authorization", tokenAuth).build();
-//                        return chain.proceed(request);
-//                    }
-//                }).build();
+        SharedPreferences preferences = getSharedPreferences("bikemobi", MODE_PRIVATE);
+        tokenAuth = preferences.getString("token", "");
 
-        Retrofit.Builder builder = new Retrofit.Builder().client(defaultHttpClient).baseUrl("localhost:3000").addConverterFactory(GsonConverterFactory.create());
+        // OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(1, )
+
+        Retrofit.Builder builder = new Retrofit.Builder().client(defaultHttpClient).baseUrl("http://192.168.4.4:5000/api/").addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
         RestInterface restInterface = retrofit.create(RestInterface.class);
@@ -77,6 +81,7 @@ public class PerfilActivity extends BaseActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+                        Log.d("response", "response");
                         teste = response.body().string();
                         Log.d("ENTROU", teste);
                         JSONObject object = new JSONObject(teste);
@@ -106,7 +111,7 @@ public class PerfilActivity extends BaseActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-
+                Log.d("erra: ", t.getMessage());
             }
         });
     }

@@ -12,7 +12,7 @@ import retrofit2.http.Headers;
 public interface RestInterface {
 
     @Headers({"Content-Type: application/json"})
-    @GET("/api/perfil/todos")
+    @GET("perfil/todos")
     Call<ResponseBody> perfil();
 
 }
