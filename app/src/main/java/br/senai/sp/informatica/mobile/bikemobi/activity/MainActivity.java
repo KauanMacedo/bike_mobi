@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity
 
                 break;
             case R.id.nav_drawer_rota:
-
+                intent = new Intent(this, RotaActivity.class);
+                startActivity(intent);
                 break;
         }
 
