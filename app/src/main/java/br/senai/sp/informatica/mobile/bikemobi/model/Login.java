@@ -1,6 +1,5 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by 43255815886 on 28/02/2018.
@@ -8,16 +7,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Login {
 
-    @SerializedName("id")
     private int id;
 
-    @SerializedName("nomeUsuario")
     private String nomeUsuario;
 
-    @SerializedName("email")
     private String email;
 
-    @SerializedName("senha")
     private String senha;
 
     public Login() {
