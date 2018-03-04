@@ -95,7 +95,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Data de Nascimento"
                 tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="335dp" />
+                tools:layout_editor_absoluteY="335dp"/>
 
             <EditText
                 android:id="@+id/editDataNascimento"

@@ -4,6 +4,9 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:id="@+id/nav_drawer_cadastro"
+            android:title="Cadastro" />
+        <item
             android:id="@+id/nav_drawer_historico"
             android:checked="true"
             android:title="Histórico" />

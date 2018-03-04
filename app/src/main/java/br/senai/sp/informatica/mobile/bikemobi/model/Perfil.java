@@ -1,6 +1,5 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
-import com.google.gson.annotations.SerializedName;
 
 import java.sql.Date;
 
@@ -10,29 +9,31 @@ import java.sql.Date;
 
 public class Perfil {
 
-    @SerializedName("id")
     private int id;
 
-    @SerializedName("nome")
     private String nome;
 
-    @SerializedName("dataNascimento")
     private Date dataNascimento;
 
-    @SerializedName("localidade")
     private String localidade;
 
-    @SerializedName("bio")
     private String bio;
 
-    @SerializedName("avatarUrl")
     private String avatarUrl;
 
-    @SerializedName("dataCriacao")
     private Date dataCriacao;
 
-    @SerializedName("loginId")
     private int loginId;
+
+    private String login;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
     public Perfil() {
 
