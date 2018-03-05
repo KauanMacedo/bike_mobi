@@ -27,6 +27,76 @@ public class Perfil {
 
     private String login;
 
+    private String estado;
+
+    private String cidade;
+
+    private String idLogin;
+
+    private Date atualizadoEm;
+
+    private Date criadoEm;
+
+    private int qtdAtualizacoes;
+
+    public int getQtdAtualizacoes() {
+        return qtdAtualizacoes;
+    }
+
+    public void setQtdAtualizacoes(int qtdAtualizacoes) {
+        this.qtdAtualizacoes = qtdAtualizacoes;
+    }
+
+    public Date getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(Date criadoEm) {
+        this.criadoEm = criadoEm;
+    }
+
+    private Date getAtualizadoEm() {
+        return atualizadoEm;
+    }
+
+    private String atualizadoPor;
+
+    public String getAtualizadoPor() {
+        return atualizadoPor;
+    }
+
+    public void setAtualizadoPor(String atualizadoPor) {
+        this.atualizadoPor = atualizadoPor;
+    }
+
+    public void setAtualizadoEm(Date atualizadoEm) {
+        this.atualizadoEm = atualizadoEm;
+    }
+
+    public String getIdLogin() {
+        return idLogin;
+    }
+
+    public void setIdLogin(String idLogin) {
+        this.idLogin = idLogin;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String getLogin() {
         return login;
     }

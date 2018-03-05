@@ -5,15 +5,18 @@
 
         <item
             android:id="@+id/nav_drawer_cadastro"
-            android:title="Cadastro" />
+            android:title="Perfil"
+            android:visible="true" />
         <item
             android:id="@+id/nav_drawer_historico"
             android:checked="true"
-            android:title="Histórico" />
+            android:title="Histórico"
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_drawer_avaliacao"
-            android:title="Avalie-nos" />
+            android:title="Avalie-nos"
+            android:visible="false" />
 
 
         <item

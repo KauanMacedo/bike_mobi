@@ -17,7 +17,7 @@ import java.util.Calendar;
 import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
-import br.senai.sp.informatica.mobile.bikemobi.view.DateDialog;
+import br.senai.sp.informatica.mobile.bikemobi.fragment.DateDialog;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -30,6 +30,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private EditText etNomeCompleto;
     private EditText etDataNascimento;
     private EditText etBiografia;
+    private EditText etCidade;
+    private EditText etEstado;
 
     private Calendar calendar;
 
@@ -46,6 +48,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         etSenha = findViewById(R.id.editSenha);
         etDataNascimento = findViewById(R.id.editDataNascimento);
         etBiografia = findViewById(R.id.editBiografia);
+        etCidade = findViewById(R.id.editCidade);
+        etEstado = findViewById(R.id.editEstado);
 
         calendar = Calendar.getInstance();
         etDataNascimento.setOnClickListener(this);
@@ -59,6 +63,9 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             etNomeUsuario.setText(perfil.getLogin());
             etBiografia.setText(perfil.getBio());
             etDataNascimento.setText(fmt.format(perfil.getDataNascimento()));
+            calendar.setTime(perfil.getDataNascimento());
+            etCidade.setText(perfil.getCidade());
+            etEstado.setText(perfil.getEstado());
         }
 
         ActionBar actionBar = getActionBar();
@@ -82,8 +89,11 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                 perfil.setLogin(etNomeUsuario.getText().toString());
                 perfil.setBio(etBiografia.getText().toString());
                 perfil.setNome(etNomeCompleto.getText().toString());
-                Date dataNascimento = new Date(calendar.getTimeInMillis());
+                Date dataNascimento = new Date(calendar.getTimeInMillis() + 24 * 60 * 60 * 1000);
                 perfil.setDataNascimento(dataNascimento);
+                perfil.setCidade(etCidade.getText().toString());
+                perfil.setEstado(etEstado.getText().toString());
+
                 dao.setPerfil(perfil);
                 setResult(RESULT_OK);
                 break;
