@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.view;
+package br.senai.sp.informatica.mobile.bikemobi.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

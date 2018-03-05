@@ -114,7 +114,9 @@ public class MainActivity extends AppCompatActivity
         if (perfil != null){
             tvNome.setText(perfil.getNome());
             tvData.setText("Nascimento: " + fmt.format(perfil.getDataNascimento()));
-            tvLocalidade.setText(perfil.getLocalidade());
+            tvLocalidade.setText(perfil.getCidade() + "/" + perfil.getEstado());
         }
     }
+
+
 }

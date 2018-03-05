@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.rest;
+package br.senai.sp.informatica.mobile.bikemobi.util;
 
 import android.os.AsyncTask;
 import android.util.Log;

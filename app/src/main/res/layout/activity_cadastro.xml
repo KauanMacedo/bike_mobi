@@ -18,163 +18,133 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textNomeUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nome de Usuário"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
-
-            <EditText
-                android:id="@+id/editNomeUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="35dp" />
-
-            <TextView
-                android:id="@+id/textEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Email"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="94dp" />
-
-            <EditText
-                android:id="@+id/editEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="113dp" />
-
-            <TextView
-                android:id="@+id/textSenha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Senha"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="171dp" />
-
-            <EditText
-                android:id="@+id/editSenha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="190dp" />
-
-            <TextView
                 android:id="@+id/textNomeCadastro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Nome"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="256dp" />
+                android:text="Nome" />
 
             <EditText
                 android:id="@+id/editNome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="275dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"/>
 
             <TextView
                 android:id="@+id/textDataNascimentoCadastro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Data de Nascimento"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="335dp"/>
+                android:text="Data de Nascimento"/>
 
             <EditText
                 android:id="@+id/editDataNascimento"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="354dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/textLocalidadeCadastro"
+                android:id="@+id/textCidadeCadastro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Localidade"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="414dp" />
+                android:text="Cidade" />
 
-            <Spinner
-                android:id="@+id/spinnerLocalidade"
+            <EditText
+                android:id="@+id/editCidade"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="433dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/textEstadoCadastro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Estado"/>
+
+            <EditText
+                android:id="@+id/editEstado"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textBiografia"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Biografia"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="467dp" />
+                android:text="Biografia"/>
 
             <EditText
                 android:id="@+id/editBiografia"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="486dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"/>
+
+            <TextView
+                android:id="@+id/textNomeUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Nome de Usuário"/>
+
+            <EditText
+                android:id="@+id/editNomeUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"/>
+
+            <TextView
+                android:id="@+id/textEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Email" />
+
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/textSenha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="Senha" />
+
+            <EditText
+                android:id="@+id/editSenha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textAvatar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Avatar"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="335dp" />
+                android:text="Avatar" />
 
             <EditText
                 android:id="@+id/editAvatar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="486dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textDataCriacao"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Data de Nascimento"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="335dp" />
+                android:text="Data de Nascimento"/>
 
             <EditText
                 android:id="@+id/editDataCriacao"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date"
-                tools:layout_editor_absoluteX="15dp"
-                tools:layout_editor_absoluteY="354dp" />
+                android:layout_height="match_parent"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
     </ScrollView>

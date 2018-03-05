@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.StringReader;
 
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
-import br.senai.sp.informatica.mobile.bikemobi.rest.JSONParser;
+import br.senai.sp.informatica.mobile.bikemobi.util.JSONParser;
 
 /**
  * Created by rodol on 02/03/2018.
@@ -52,9 +52,9 @@ public class PerfilDao {
             new JSONParser.Alterar(url + "atualizar", json, new JSONParser.LocationCallBack() {
                 @Override
                 public void setResponse(int code, String location) {
-                    Log.d("AlbumResponse", "code: " + String.valueOf(code));
+                    Log.d("LogBike", "code: " + String.valueOf(code));
                 }
             }).execute();
-        } catch (Exception e){Log.d("BikeTech", "Erro ao atualizar.");}
+        } catch (Exception e){Log.d("LogBike", "Erro ao atualizar." + e);}
     }
 }
