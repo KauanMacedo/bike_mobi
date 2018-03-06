@@ -3,25 +3,36 @@
 
     <group android:checkableBehavior="single">
 
+        <!--<item-->
+            <!--android:id="@+id/nav_drawer_inicio"-->
+            <!--android:checked="true"-->
+            <!--android:title="Início"-->
+            <!--android:visible="true" />-->
+
+        <item
+            android:id="@+id/nav_drawer_perfil"
+            android:title="Perfil"
+            android:visible="true" />
+
         <item
             android:id="@+id/nav_drawer_cadastro"
-            android:title="Perfil"
+            android:title="Cadastro"
             android:visible="true" />
         <item
             android:id="@+id/nav_drawer_historico"
-            android:checked="true"
             android:title="Histórico"
-            android:visible="false" />
+            android:visible="true" />
 
         <item
             android:id="@+id/nav_drawer_avaliacao"
             android:title="Avalie-nos"
-            android:visible="false" />
+            android:visible="true" />
 
 
         <item
             android:id="@+id/nav_drawer_rota"
-            android:title="Traçar rota" />
+            android:title="Traçar rota"
+            android:visible="true" />
     </group>
 
 </menu>

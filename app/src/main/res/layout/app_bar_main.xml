@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.senai.sp.informatica.mobile.bikemobi.activity.MainActivity">
+    tools:context="br.senai.sp.informatica.mobile.bikemobi.activity.PerfilActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

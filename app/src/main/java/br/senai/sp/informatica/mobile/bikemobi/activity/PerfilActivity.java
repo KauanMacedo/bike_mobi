@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +20,7 @@ import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
 
-public class MainActivity extends AppCompatActivity
+public class PerfilActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private PerfilDao dao = PerfilDao.instance;
@@ -69,24 +70,32 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        switch (id){
+        switch (id) {
+
+            case R.id.nav_drawer_perfil:
+                intent = new Intent(this, PerfilActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.nav_drawer_cadastro:
                 intent = new Intent(this, CadastroActivity.class);
-                startActivityForResult(intent, ATUALIZA_PERFIL);
+                startActivity(intent);
                 break;
-            case  R.id.nav_drawer_historico:
+
+            case R.id.nav_drawer_historico:
                 intent = new Intent(this, HistoricoActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.nav_drawer_avaliacao:
 
+            case R.id.nav_drawer_avaliacao:
+                intent = new Intent(this, AvaliacaoActivity.class);
+                startActivity(intent);
                 break;
+
             case R.id.nav_drawer_rota:
                 intent = new Intent(this, RotaActivity.class);
                 startActivity(intent);
@@ -100,7 +109,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case ATUALIZA_PERFIL:
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(this, "Perfil atualizado", Toast.LENGTH_SHORT).show();
@@ -109,9 +118,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void getDadosPerfil(){
+    @SuppressLint("SetTextI18n")
+    public void getDadosPerfil() {
         perfil = dao.getPerfil(1l);
-        if (perfil != null){
+        if (perfil != null) {
             tvNome.setText(perfil.getNome());
             tvData.setText("Nascimento: " + fmt.format(perfil.getDataNascimento()));
             tvLocalidade.setText(perfil.getCidade() + "/" + perfil.getEstado());
