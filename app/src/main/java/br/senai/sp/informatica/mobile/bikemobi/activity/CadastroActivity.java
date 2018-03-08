@@ -19,7 +19,7 @@ import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
 import br.senai.sp.informatica.mobile.bikemobi.fragment.DateDialog;
 
-public class CadastroActivity extends AppCompatActivity implements View.OnClickListener{
+public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
     private PerfilDao dao = PerfilDao.instance;
     private Perfil perfil;
@@ -58,7 +58,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
 
         perfil = dao.getPerfil(1l);
-        if (perfil != null){
+        if (perfil != null) {
             etNomeCompleto.setText(perfil.getNome());
             etNomeUsuario.setText(perfil.getLogin());
             etBiografia.setText(perfil.getBio());
@@ -69,7 +69,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         }
 
         ActionBar actionBar = getActionBar();
-        if (actionBar != null){
+        if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -118,7 +118,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         try {
             Log.d("AlbumTeste:", etDataNascimento.getText().toString());
             calendar.setTime(fmt.parse(etDataNascimento.getText().toString()));
-        } catch (ParseException e) {}
+        } catch (ParseException e) {
+        }
 
     }
 }

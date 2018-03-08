@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.PerfilActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,17 +31,17 @@
         </activity>
         <activity
             android:name=".activity.CadastroActivity"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.PerfilActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value=".activity.PerfilActivity" />
         </activity>
         <activity
             android:name=".activity.HistoricoActivity"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.PerfilActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value=".activity.PerfilActivity" />
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -58,13 +58,14 @@
         <activity
             android:name=".activity.RotaActivity"
             android:label="@string/title_activity_rota"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.PerfilActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.AvaliacaoActivity"></activity>
     </application>
 
 </manifest>
