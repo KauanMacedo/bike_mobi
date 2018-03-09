@@ -35,4 +35,5 @@ dependencies {
     implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     implementation 'com.google.maps:google-maps-services:0.1.20'
     implementation 'com.google.maps.android:android-maps-utils:0.4+'
+    implementation 'com.google.android.gms:play-services-places:11.8.0'
 }
