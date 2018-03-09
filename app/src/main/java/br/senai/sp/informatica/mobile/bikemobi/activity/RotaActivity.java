@@ -1,17 +1,32 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +55,7 @@ import java.util.concurrent.TimeUnit;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
 
 public class RotaActivity extends AppCompatActivity
@@ -47,7 +63,8 @@ public class RotaActivity extends AppCompatActivity
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback{
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        OnConnectionFailedListener{
 
     private static final int overview = 0;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -57,6 +74,15 @@ public class RotaActivity extends AppCompatActivity
 
     private boolean mPermissionDenied = false;
 
+    private GoogleApiClient mGoogleApiClient;
+    private String TAG = "GPLACES";
+    private int PLACE_PICKER_REQUEST = 2;
+
+    private EditText etOrigem;
+    private EditText etDestino;
+
+    private String localAtual = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +90,38 @@ public class RotaActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        etOrigem = findViewById(R.id.etRotaOrigem);
+        etDestino = findViewById(R.id.etRotaDestino);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, this)
+                .build();
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton3);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPlace(v);
+            }
+        });
+
+        etDestino.setFocusable(false);
+        etDestino.setKeyListener(null);
+        etDestino.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPlace(v);
+            }
+        });
+
+
     }
 
-    private DirectionsResult getDirectionsDetails(String origin,String destination,TravelMode mode) {
+    private DirectionsResult getDirectionsDetails(String origin, String destination, TravelMode mode) {
         DateTime now = new DateTime();
         try {
             return DirectionsApi.newRequest(getGeoContext())
@@ -92,25 +147,35 @@ public class RotaActivity extends AppCompatActivity
 
         mMap = googleMap;
 
+        if (!localAtual.isEmpty() && !etDestino.equals("Onde você gostaria de ir?")) {
+        //if (!etDestino.getText().toString().isEmpty()) {
+            setupGoogleMapScreenSettings(googleMap);
+            //DirectionsResult results = getDirectionsDetails("Rua São Francisco de Assis, Diadema, Sao Paulo", "Jabaquara, Sao Paulo", TravelMode.BICYCLING);
+            //DirectionsResult results = getDirectionsDetails(etOrigem.getText().toString(), etDestino.getText().toString(), TravelMode.BICYCLING);
+            String origem = localAtual;
+            String destino = etDestino.getText().toString();
+            try {
+                DirectionsResult results = getDirectionsDetails(origem, destino, TravelMode.BICYCLING);
 
-        setupGoogleMapScreenSettings(googleMap);
-        DirectionsResult results = getDirectionsDetails("Rua São Francisco de Assis, Diadema, Sao Paulo","Jabaquara, Sao Paulo",TravelMode.BICYCLING);
-        if (results != null) {
-            addPolyline(results, googleMap);
-            positionCamera(results.routes[overview], googleMap);
-            addMarkersToMap(results, googleMap);
+                if (results != null) {
+                    addPolyline(results, googleMap);
+                    positionCamera(results.routes[overview], googleMap);
+                    addMarkersToMap(results, googleMap);
+
+                    Toast.makeText(this
+                            , String.valueOf(results.routes[overview].legs[overview].duration)
+                                    + "\n" + String.valueOf(results.routes[overview].legs[overview].distance)
+                            , Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e){Toast.makeText(this, "Não foi possível traçar a rota", Toast.LENGTH_SHORT).show();}
+
         }
-        Toast.makeText(this
-                , String.valueOf(results.routes[overview].legs[overview].duration)
-                        + "\n" + String.valueOf(results.routes[overview].legs[overview].distance)
-                , Toast.LENGTH_LONG).show();
-
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
 
-    }
 
+    }
 
 
     private void setupGoogleMapScreenSettings(GoogleMap mMap) {
@@ -224,4 +289,70 @@ public class RotaActivity extends AppCompatActivity
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public void getPlace(View v) {
+        if(mGoogleApiClient == null || !mGoogleApiClient.isConnected())
+            return;
+
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch ( GooglePlayServicesRepairableException e) {
+            Log.d(TAG, "GooglePlayServicesRepairableException thrown");
+        } catch ( GooglePlayServicesNotAvailableException e) {
+            Log.d(TAG, "GooglePlayServicesNotAvailableException thrown");
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+            displayPlace(PlacePicker.getPlace( data, this ));
+        }
+    }
+    private void displayPlace(Place place) {
+        if (place == null)
+            return;
+
+        StringBuilder builder = new StringBuilder();
+
+        if(!TextUtils.isEmpty(place.getName())) {
+            builder.append("Name: " + place.getName() + "\n");
+        }
+        if(!TextUtils.isEmpty( place.getAddress())) {
+            builder.append("Address: " + place.getAddress() + "\n");
+        }
+        if(!TextUtils.isEmpty( place.getPhoneNumber())) {
+            builder.append("Phone: " + place.getPhoneNumber());
+        }
+
+        location = mMap.getMyLocation();
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        String endereco;
+        String enderecoLatLng;
+        try {
+            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            endereco = addresses.get(0).getAddressLine(0);
+            //endereco = endereco.substring(endereco.indexOf("-") + 2, endereco.length());
+            localAtual = String.valueOf(location.getLatitude()) + ", " + String.valueOf(location.getLongitude());
+        } catch (IOException e) {
+            endereco = "Endereço não encontrado";
+        }
+        etOrigem.setText(endereco);
+        etDestino.setText(place.getAddress());
+        onMapReady(mMap);
+        Toast.makeText(this,builder.toString(), Toast.LENGTH_LONG).show();
+        //tvPlace.setText(builder.toString());
+    }
+
 }
