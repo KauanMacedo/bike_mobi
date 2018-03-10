@@ -575,8 +575,5 @@ public class RotaActivity extends AppCompatActivity
         // Displaying the new location on UI
         displayLocation();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
+
