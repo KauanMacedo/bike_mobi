@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <!--uses-permission-sdk-23 android:name="android.permission.INTERNET" /-->
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activity.PerfilActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,17 +32,17 @@
         </activity>
         <activity
             android:name=".activity.CadastroActivity"
-            android:parentActivityName=".activity.PerfilActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.PerfilActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
         <activity
             android:name=".activity.HistoricoActivity"
-            android:parentActivityName=".activity.PerfilActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.PerfilActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -59,7 +59,17 @@
         <activity
             android:name=".activity.RotaActivity"
             android:label="@string/title_activity_rota"
-            android:parentActivityName=".activity.PerfilActivity">
+            android:parentActivityName=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.PerfilActivity"
+            android:label="@string/title_activity_perfil"
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
