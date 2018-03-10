@@ -29,7 +29,7 @@ public class PerfilDao {
             String json = new JSONParser.Consultar(url + "buscarid/1", new JSONParser.DataCallBack() {
                 @Override
                 public void setResponse(int code, String json) {
-
+                    Log.d("BikeLog", "url: " + url + "buscarid/1" + " . code: " + code + ". json: " + json);
                 }
             }).execute().get();
 
@@ -41,7 +41,7 @@ public class PerfilDao {
             }
 
         } catch(Exception e){
-            Log.d("LogBike", "Erro ao getPerfil" + e);
+            Log.d("BikeLog", "Erro ao getPerfil" + e);
         }
         return perfil;
     }
@@ -52,9 +52,9 @@ public class PerfilDao {
             new JSONParser.Alterar(url + "atualizar", json, new JSONParser.LocationCallBack() {
                 @Override
                 public void setResponse(int code, String location) {
-                    Log.d("LogBike", "code: " + String.valueOf(code));
+                    Log.d("BikeLog", "code: " + String.valueOf(code));
                 }
             }).execute();
-        } catch (Exception e){Log.d("LogBike", "Erro ao atualizar." + e);}
+        } catch (Exception e){Log.d("BikeLog", "Erro ao atualizar." + e);}
     }
 }
