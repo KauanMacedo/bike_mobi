@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bikemobi</string>
+    <string name="app_name">BikeMobi</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -20,4 +20,14 @@
     <string name="nome">Nome</string>
     <string name="cidade">Cidade</string>
     <string name="estado">Estado</string>
+    <string name="nome_do_usuario">Nome do Usuário</string>
+    <string name="biografia">Biografia</string>
+    <string name="e_mail">E-mail</string>
+
+    <string name="nome_perfil_default">Sem Nome</string>
+    <string name="nome_perfil_key">NOME_PERFIL</string>
+    <string name="email_perfil_default">Sem E-mail</string>
+    <string name="email_perfil_key">EMAIL_PERFIL</string>
+    <string name="title_activity_nav">Map</string>
+
 </resources>

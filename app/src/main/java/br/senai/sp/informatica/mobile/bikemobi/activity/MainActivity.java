@@ -1,7 +1,9 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
         import android.content.Intent;
+        import android.content.SharedPreferences;
         import android.os.Bundle;
+        import android.preference.PreferenceManager;
         import android.support.annotation.NonNull;
         import android.support.design.widget.NavigationView;
         import android.support.v4.view.GravityCompat;
@@ -10,15 +12,17 @@ package br.senai.sp.informatica.mobile.bikemobi.activity;
         import android.support.v7.app.AppCompatActivity;
         import android.support.v7.widget.Toolbar;
         import android.view.MenuItem;
+        import android.view.View;
         import android.widget.TextView;
         import android.widget.Toast;
 
-        import org.w3c.dom.Text;
-
         import java.text.DateFormat;
+        import java.util.Calendar;
 
         import br.senai.sp.informatica.mobile.bikemobi.R;
+        import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
         import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
+        import br.senai.sp.informatica.mobile.bikemobi.model.Login;
         import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
 
 
@@ -32,6 +36,9 @@ public class MainActivity extends AppCompatActivity
     private PerfilDao dao = PerfilDao.instance;
     private Perfil perfil;
 
+    private LoginDao loginDao = LoginDao.instance;
+    private Login login;
+
     private TextView tvNome;
     private TextView tvData;
     private TextView tvLocalidade;
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,19 +69,20 @@ public class MainActivity extends AppCompatActivity
         tvNome = findViewById(R.id.textNomePerfil);
         tvData = findViewById(R.id.textDataNascimentoPerfil);
         tvLocalidade = findViewById(R.id.textLocalidadePerfil);
-        tvNavHeaderNome = (TextView) findViewById(R.id.tvNavHeaderNome);
-        tvNavHeaderEmail = findViewById(R.id.textViewEditarPerfilNavDrawer);
+        View header = navigationView.getHeaderView(0);
+        tvNavHeaderNome = header.findViewById(R.id.tvNavHeaderNome);
+        tvNavHeaderEmail = header.findViewById(R.id.textViewEditarPerfilNavDrawer);
 
-        getDadosPerfil();
+        getDados();
     }
 
     @Override
     protected void onStart() {
-        getDadosPerfil();
-        if (perfil != null){
-            //tvNavHeaderNome.setText(perfil.getNome());
-        }
         super.onStart();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        tvNavHeaderNome.setText(preferences.getString(this.getResources().getString(R.string.nome_perfil_key),this.getResources().getString(R.string.nome_perfil_default)));
+        tvNavHeaderEmail.setText(preferences.getString(this.getResources().getString(R.string.email_perfil_key),this.getResources().getString(R.string.email_perfil_default)));
     }
 
     @Override
@@ -130,18 +139,42 @@ public class MainActivity extends AppCompatActivity
             case ATUALIZA_PERFIL:
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(this, "Perfil atualizado", Toast.LENGTH_SHORT).show();
-                    getDadosPerfil();
+                    getDados();
                 }
         }
     }
 
-    public void getDadosPerfil(){
+    public void getDados(){
         perfil = dao.getPerfil(1l);
+        login = loginDao.getLogin(1l);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+
         if (perfil != null){
             tvNome.setText(perfil.getNome());
-            tvData.setText("Nascimento: " + fmt.format(perfil.getDataNascimento()));
+
+            Calendar dtNascimento = Calendar.getInstance();
+            dtNascimento.setTime(perfil.getDataNascimento());
+            Calendar dtAtual = Calendar.getInstance();
+            int idade = dtAtual.get(Calendar.YEAR) - dtNascimento.get(Calendar.YEAR);
+            if (dtNascimento.get(Calendar.DAY_OF_YEAR) > dtAtual.get(Calendar.DAY_OF_YEAR)){
+                idade--;
+            }
+            tvData.setText(idade + " anos");
+
             tvLocalidade.setText(perfil.getCidade() + "/" + perfil.getEstado());
+
+
+
+            editor.putString(this.getResources().getString(R.string.nome_perfil_key),perfil.getNome());
+
         }
+
+        if (login != null){
+            editor.putString(this.getResources().getString(R.string.email_perfil_key),login.getEmail());
+        }
+        editor.apply();
     }
 
 

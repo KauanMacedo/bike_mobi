@@ -111,6 +111,8 @@ public class RotaActivity extends AppCompatActivity
     private static int FATEST_INTERVAL = 5000; // 5 sec
     private static int DISPLACEMENT = 10; // 10 meters
 
+    private String clique;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,8 +138,18 @@ public class RotaActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //displayLocation();
-                //togglePeriodicLocationUpdates();
+                Intent intent = new Intent(v.getContext(), NavActivity.class);
+                if (!etOrigem.getText().toString().equals("Seu Local")) {
+                    intent.putExtra("origem", etOrigem.getText().toString());
+                } else {
+                    intent.putExtra("origem", localAtual);
+                }
+                intent.putExtra("destino", etDestino.getText().toString());
+                if (!etDestino.getText().toString().equals("Onde você gostaria de ir?")) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(v.getContext(), "Escolha um destino.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -153,11 +165,20 @@ public class RotaActivity extends AppCompatActivity
         etDestino.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clique = "destino";
                 getPlace(v);
             }
         });
 
         etOrigem.setFocusable(false);
+        etOrigem.setKeyListener(null);
+        etOrigem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clique = "origem";
+                getPlace(v);
+            }
+        });
 
         btLocAtual.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,12 +246,15 @@ public class RotaActivity extends AppCompatActivity
 
         mMap = googleMap;
 
+        googleMap.clear();
         if (!localAtual.isEmpty() && !etDestino.equals("Onde você gostaria de ir?")) {
-            //if (!etDestino.getText().toString().isEmpty()) {
             setupGoogleMapScreenSettings(googleMap);
-            //DirectionsResult results = getDirectionsDetails("Rua São Francisco de Assis, Diadema, Sao Paulo", "Jabaquara, Sao Paulo", TravelMode.BICYCLING);
-            //DirectionsResult results = getDirectionsDetails(etOrigem.getText().toString(), etDestino.getText().toString(), TravelMode.BICYCLING);
-            String origem = localAtual;
+            String origem;
+            if (etOrigem.getText().toString().equals("Seu Local")) {
+                origem = localAtual;
+            } else {
+                origem = etOrigem.getText().toString();
+            }
             String destino = etDestino.getText().toString();
             try {
                 DirectionsResult results = getDirectionsDetails(origem, destino, TravelMode.BICYCLING);
@@ -242,6 +266,8 @@ public class RotaActivity extends AppCompatActivity
 
                     tvRotaInfo.setText(String.valueOf(results.routes[overview].legs[overview].duration)
                             + " (" + String.valueOf(results.routes[overview].legs[overview].distance) + ")");
+
+                    displayLocation();
                     /*
                     Toast.makeText(this
                             , String.valueOf(results.routes[overview].legs[overview].duration)
@@ -332,7 +358,7 @@ public class RotaActivity extends AppCompatActivity
         } catch (IOException e) {
             endereco = "Endereço não encontrado";
         }
-        Toast.makeText(this, "Sua localização atual é: \n\n" + endereco, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Sua localização atual é: \n\n" + endereco, Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -340,7 +366,7 @@ public class RotaActivity extends AppCompatActivity
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -435,10 +461,16 @@ public class RotaActivity extends AppCompatActivity
         } catch (IOException e) {
             endereco = "Endereço não encontrado";
         }
-        etOrigem.setText(endereco);
-        etDestino.setText(place.getAddress());
+
+        if (clique.equals("destino")){
+            //etOrigem.setText(endereco);
+            etDestino.setText(place.getAddress());
+        } else {
+            etOrigem.setText(place.getAddress());
+        }
+
         onMapReady(mMap);
-        Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, builder.toString(), Toast.LENGTH_LONG).show();
         //tvPlace.setText(builder.toString());
     }
 
@@ -473,7 +505,7 @@ public class RotaActivity extends AppCompatActivity
             mMap.moveCamera(update);
             mMap.animateCamera(zoom);
 
-            Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
