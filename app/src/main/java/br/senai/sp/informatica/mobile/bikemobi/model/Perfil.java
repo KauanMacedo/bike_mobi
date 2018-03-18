@@ -1,12 +1,17 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.sql.Date;
 
 /**
  * Created by 43255815886 on 28/02/2018.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Perfil {
 
     private int id;
@@ -38,6 +43,7 @@ public class Perfil {
     private Date criadoEm;
 
     private int qtdAtualizacoes;
+    
 
     public int getQtdAtualizacoes() {
         return qtdAtualizacoes;
@@ -97,6 +103,7 @@ public class Perfil {
         this.estado = estado;
     }
 
+    @JsonIgnore
     public String getLogin() {
         return login;
     }

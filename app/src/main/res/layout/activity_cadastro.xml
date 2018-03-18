@@ -1,138 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/back_cadasto3">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
 
-        <LinearLayout
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nome" />
+                android:hint="@string/nome"
+                android:inputType="textPersonName"
+                android:textColor="@color/white" />
+        </android.support.design.widget.TextInputLayout>
 
-            <EditText
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
+
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editDataNascimento"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/data_de_nascimento"
-                android:inputType="textPersonName" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:hint="@string/data_de_nascimento"
+                android:textColor="@color/white"/>
+        </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/editCidade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/cidade"
-                    android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="10dp"
+            android:text="Estado"
+            android:textColor="@color/white"/>
+        <Spinner
+            android:id="@+id/spEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="6dp"/>
 
-                <EditText
-                    android:id="@+id/editEstado"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="@string/estado"
-                    android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="10dp"
+            android:text="Cidade"
+            android:textColor="@color/white"/>
+        <Spinner
+            android:id="@+id/spCidade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="8dp"/>
 
-            </LinearLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
 
-            <TextView
-                android:id="@+id/textBiografia"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Biografia" />
-
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editBiografia"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content"
+                android:hint="@string/biografia"
+                android:inputType="text"
+                android:textColor="@color/white"/>
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textNomeUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Nome de Usuário" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editNomeUsuario"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content"
+                android:hint="@string/nome_do_usuario"
+                android:textColor="@color/white"/>
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textEmail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Email" />
 
-            <EditText
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
+
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editEmail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content"
+                android:hint="@string/e_mail"
+                android:textColor="@color/white"/>
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textSenha"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Senha" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editSenha"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textAvatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Avatar" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="4dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/editAvatar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+                android:layout_height="wrap_content"
+                android:hint="Avatar"
+                android:textColor="@color/white"/>
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textDataCriacao"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:text="Data de Criação" />
 
-            <EditText
-                android:id="@+id/editDataCriacao"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName" />
+    </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</android.support.v4.widget.DrawerLayout>
+</android.support.constraint.ConstraintLayout>

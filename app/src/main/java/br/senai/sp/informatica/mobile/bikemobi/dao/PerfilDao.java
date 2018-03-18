@@ -41,7 +41,7 @@ public class PerfilDao {
             }
 
         } catch(Exception e){
-            Log.d("BikeLog", "Erro ao getPerfil" + e);
+            Log.d("BikeLog", "Erro ao getPerfil. Código de Retorno: " + code + ". URL: " + url + "buscarid/1" + ". Início do erro: "+ e);
         }
         return perfil;
     }

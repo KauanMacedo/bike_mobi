@@ -21,12 +21,12 @@
         <item
             android:id="@+id/nav_drawer_historico"
             android:title="Histórico"
-            android:visible="true" />
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_drawer_avaliacao"
             android:title="Avalie-nos"
-            android:visible="true" />
+            android:visible="false" />
 
 
         <item

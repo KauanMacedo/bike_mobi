@@ -1,10 +1,13 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Created by 43255815886 on 28/02/2018.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Login {
 
     private int id;
