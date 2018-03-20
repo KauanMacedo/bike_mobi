@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.constraint.ConstraintLayout
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/back_cadasto3">
-
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editNome"
@@ -33,15 +30,15 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editDataNascimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/data_de_nascimento"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
@@ -49,14 +46,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:textSize="10dp"
             android:text="Estado"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
         <Spinner
             android:id="@+id/spEstado"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="6dp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -64,21 +62,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
-            android:textSize="10dp"
             android:text="Cidade"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
         <Spinner
             android:id="@+id/spCidade"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="6dp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editBiografia"
@@ -86,43 +85,43 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/biografia"
                 android:inputType="text"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editNomeUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nome_do_usuario"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/e_mail"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editSenha"
@@ -136,15 +135,15 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/white"
-            android:layout_marginLeft="4dp">
+            android:layout_marginLeft="4dp"
+            android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/editAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Avatar"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
 
