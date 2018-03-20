@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -544,6 +545,7 @@ public class RotaActivity extends AppCompatActivity
                 .addApi(LocationServices.API).build();
     }
 
+    @SuppressLint("SetTextI18n")
     private void togglePeriodicLocationUpdates() {
         if (!mRequestingLocationUpdates) {
             // Changing the button text
@@ -589,11 +591,11 @@ public class RotaActivity extends AppCompatActivity
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClientLocation, mLocationRequest, this);
+        LocationServices.getFusedLocationProviderClient(this);
 
     }
     protected void stopLocationUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClientLocation, this);
+        LocationServices.getFusedLocationProviderClient(this); // .removeLocationUpdates(mGoogleApiClientLocation, this);
     }
 
 

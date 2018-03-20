@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -52,12 +53,15 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
     private Calendar calendar;
 
+    private ImageView avatar1, avatar2, avatar3;
+
+
     private final static DateFormat fmt = DateFormat.getDateInstance(DateFormat.SHORT);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_cadastro_old);
 
         etNomeUsuario = findViewById(R.id.editNomeUsuario);
         etEmail = findViewById(R.id.editEmail);
@@ -65,10 +69,14 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         etSenha = findViewById(R.id.editSenha);
         etDataNascimento = findViewById(R.id.editDataNascimento);
         etBiografia = findViewById(R.id.editBiografia);
-        etCidade = findViewById(R.id.editCidade);
-        etEstado = findViewById(R.id.editEstado);
+//        etCidade = findViewById(R.id.editCidade);
+//        etEstado = findViewById(R.id.editEstado);
         spEstado = findViewById(R.id.spEstado);
         spCidade = findViewById(R.id.spCidade);
+
+        avatar1 = (ImageView) findViewById(R.id.avatar_1);
+        avatar2 = (ImageView) findViewById(R.id.avatar_2);
+        avatar3 = (ImageView) findViewById(R.id.avatar_3);
 
         calendar = Calendar.getInstance();
         etDataNascimento.setOnClickListener(this);
@@ -126,13 +134,11 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
 
         login = loginDao.getLogin(1l);
-        if (login != null){
+        if (login != null) {
             etEmail.setText(login.getEmail());
             etNomeUsuario.setText(login.getNomeUsuario());
             etSenha.setText(login.getSenha());
         }
-
-
 
 
         ActionBar actionBar = getActionBar();
@@ -155,28 +161,28 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         int id = item.getItemId();
         switch (id) {
             case R.id.mi_salvar:
-                if (!isValidEmail(etEmail.getText().toString())){
+                if (!isValidEmail(etEmail.getText().toString())) {
                     Toast.makeText(this, "E-mail inválido.", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (TextUtils.isEmpty(etNomeCompleto.getText().toString())){
+                if (TextUtils.isEmpty(etNomeCompleto.getText().toString())) {
                     Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.nome) + ".", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (TextUtils.isEmpty(etDataNascimento.getText().toString())){
+                if (TextUtils.isEmpty(etDataNascimento.getText().toString())) {
                     Toast.makeText(this, "Preencha a " + this.getResources().getString(R.string.data_de_nascimento) + ".", Toast.LENGTH_SHORT).show();
                     return false;
                 }
 
-                if (TextUtils.isEmpty(etBiografia.getText().toString())){
+                if (TextUtils.isEmpty(etBiografia.getText().toString())) {
                     Toast.makeText(this, "Preencha a " + this.getResources().getString(R.string.biografia) + ".", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (TextUtils.isEmpty(etNomeUsuario.getText().toString())){
+                if (TextUtils.isEmpty(etNomeUsuario.getText().toString())) {
                     Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.nome_do_usuario) + ".", Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                if (TextUtils.isEmpty(etEmail.getText().toString())){
+                if (TextUtils.isEmpty(etEmail.getText().toString())) {
                     Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.e_mail) + ".", Toast.LENGTH_SHORT).show();
                     return false;
                 }
@@ -223,6 +229,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
             return false;
@@ -231,7 +238,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public void updSpinnerCidade(int idEstado){
+    public void updSpinnerCidade(int idEstado) {
 
         IbgeDao ibgeDao = new IbgeDao();
         List<Integer> idsEstado = ibgeDao.listarIdsEstados(ibgeDao.listarEstados());
@@ -243,6 +250,16 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         spCidade.setAdapter(spinnerArrayAdapter);
         if (perfil != null) {
             spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
+        }
+    }
+
+    public void avatarOnClick(View view) {
+        if (avatar1.isPressed()) {
+            Toast.makeText(this, "Clicou no velho", Toast.LENGTH_SHORT).show();
+        } else if (avatar2.isPressed()) {
+            Toast.makeText(this, "Clicou na enfermeira", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Clicou na moça", Toast.LENGTH_SHORT).show();
         }
     }
 }

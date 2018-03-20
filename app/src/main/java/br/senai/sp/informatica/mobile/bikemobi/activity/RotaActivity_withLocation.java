@@ -293,10 +293,7 @@ public class RotaActivity_withLocation extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
-
-
     }
-
 
     private void setupGoogleMapScreenSettings(GoogleMap mMap) {
         mMap.setBuildingsEnabled(true);

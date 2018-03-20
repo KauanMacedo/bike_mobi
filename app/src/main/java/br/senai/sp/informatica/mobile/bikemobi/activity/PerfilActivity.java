@@ -58,6 +58,4 @@ public class PerfilActivity extends AppCompatActivity{
             tvLocalidade.setText(perfil.getCidade() + "/" + perfil.getEstado());
         }
     }
-
-
 }
