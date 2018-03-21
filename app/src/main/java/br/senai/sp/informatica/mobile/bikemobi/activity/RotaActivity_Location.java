@@ -3,13 +3,9 @@ package br.senai.sp.informatica.mobile.bikemobi.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -67,7 +63,7 @@ import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 
 
-public class RotaActivity_withLocation extends AppCompatActivity
+public class RotaActivity_Location extends AppCompatActivity
         implements
         OnMapReadyCallback,
         OnMyLocationButtonClickListener,
@@ -127,15 +123,6 @@ public class RotaActivity_withLocation extends AppCompatActivity
         tvRotaInfo = findViewById(R.id.tvRotaInfo);
         btLocAtual = findViewById(R.id.btLocalAtual);
         btLocAtualizar = findViewById(R.id.btLocAtualizar);
-
-        Drawable drawable = etOrigem.getBackground(); // get current EditText drawable
-        drawable.setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP); // change the drawable color
-
-        if(Build.VERSION.SDK_INT > 16) {
-            etOrigem.setBackground(drawable); // set the new drawable to EditText
-        }else{
-            etOrigem.setBackgroundDrawable(drawable); // use setBackgroundDrawable because setBackground required API 16
-        }
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
@@ -200,6 +187,7 @@ public class RotaActivity_withLocation extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 togglePeriodicLocationUpdates();
+
             }
         });
     }
@@ -293,7 +281,10 @@ public class RotaActivity_withLocation extends AppCompatActivity
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
+
+
     }
+
 
     private void setupGoogleMapScreenSettings(GoogleMap mMap) {
         mMap.setBuildingsEnabled(true);
@@ -512,7 +503,7 @@ public class RotaActivity_withLocation extends AppCompatActivity
             mMap.moveCamera(update);
             mMap.animateCamera(zoom);
 
-            //Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
@@ -613,6 +604,7 @@ public class RotaActivity_withLocation extends AppCompatActivity
 
         // Displaying the new location on UI
         displayLocation();
-    }
-}
 
+    }
+
+}

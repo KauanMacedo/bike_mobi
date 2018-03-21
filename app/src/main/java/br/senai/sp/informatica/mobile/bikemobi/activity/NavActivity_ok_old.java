@@ -1,16 +1,15 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,7 +49,7 @@ import java.util.concurrent.TimeUnit;
 import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 
-public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
+public class NavActivity_ok_old extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener{
@@ -68,6 +66,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
     private TextView rotaInfo;
 
     private boolean mPermissionDenied = false;
+    //private boolean mRequestingLocationUpdates = false;
 
     private static final int overview = 0;
 
@@ -112,8 +111,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         displayLocation();
 
         if (mGoogleApiClientLocation.isConnected()){
-            //togglePeriodicLocationUpdates();
-            startLocationUpdates();
+            togglePeriodicLocationUpdates();
         }
 
 
@@ -385,7 +383,27 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+    private void togglePeriodicLocationUpdates() {
+        //if (!mRequestingLocationUpdates) {
+        if (true) {
 
+            //mRequestingLocationUpdates = true;
+
+            // Starting the location updates
+            startLocationUpdates();
+
+            Log.d(TAG, "Periodic location updates started!");
+
+        } else {
+
+            //mRequestingLocationUpdates = false;
+
+            // Stopping the location updates
+            stopLocationUpdates();
+
+            Log.d(TAG, "Periodic location updates stopped!");
+        }
+    }
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL);
@@ -407,12 +425,11 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClientLocation, mLocationRequest, this);
-        Log.d("BikeLog", "startLocation executada.");
+
     }
 
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClientLocation, this);
-        Log.d("BikeLog", "stopLocation executada.");
     }
 
     @Override

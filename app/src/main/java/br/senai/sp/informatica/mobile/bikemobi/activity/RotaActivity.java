@@ -1,17 +1,16 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -27,13 +26,18 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
@@ -48,9 +52,6 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
-import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
-
 import org.joda.time.DateTime;
 
 import java.io.IOException;
@@ -61,11 +62,6 @@ import java.util.concurrent.TimeUnit;
 import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
-
 
 public class RotaActivity extends AppCompatActivity
         implements
@@ -74,8 +70,7 @@ public class RotaActivity extends AppCompatActivity
         OnMyLocationClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback,
         OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks,
-        LocationListener {
+        GoogleApiClient.ConnectionCallbacks{
 
     private static final int overview = 0;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -103,15 +98,6 @@ public class RotaActivity extends AppCompatActivity
     private Button btLocAtualizar;
 
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
-
-    private boolean mRequestingLocationUpdates = false;
-
-    private LocationRequest mLocationRequest;
-
-    private static int UPDATE_INTERVAL = 10000; // 10 sec
-    private static int FATEST_INTERVAL = 5000; // 5 sec
-    private static int DISPLACEMENT = 10; // 10 meters
-
     private String clique;
 
     @Override
@@ -158,7 +144,6 @@ public class RotaActivity extends AppCompatActivity
 
             // Building the GoogleApi client
             buildGoogleApiClientLocation();
-            createLocationRequest();
         }
 
         etDestino.setFocusable(false);
@@ -181,18 +166,8 @@ public class RotaActivity extends AppCompatActivity
             }
         });
 
-        btLocAtual.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayLocation();
-            }
-        });
-        btLocAtualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                togglePeriodicLocationUpdates();
-            }
-        });
+
+
     }
 
     @Override
@@ -209,17 +184,9 @@ public class RotaActivity extends AppCompatActivity
         super.onResume();
         checkPlayServices();
 
-        // Resuming the periodic location updates
-        if (mGoogleApiClient.isConnected() && mRequestingLocationUpdates) {
-            startLocationUpdates();
-        }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopLocationUpdates();
-    }
+
 
     private DirectionsResult getDirectionsDetails(String origin, String destination, TravelMode mode) {
         DateTime now = new DateTime();
@@ -479,9 +446,7 @@ public class RotaActivity extends AppCompatActivity
     public void onConnected(@Nullable Bundle bundle) {
         displayLocation();
 
-        if (mRequestingLocationUpdates) {
-            startLocationUpdates();
-        }
+
     }
 
     private void displayLocation() {
@@ -506,7 +471,7 @@ public class RotaActivity extends AppCompatActivity
             mMap.moveCamera(update);
             mMap.animateCamera(zoom);
 
-            //Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
@@ -544,70 +509,4 @@ public class RotaActivity extends AppCompatActivity
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
     }
-
-    @SuppressLint("SetTextI18n")
-    private void togglePeriodicLocationUpdates() {
-        if (!mRequestingLocationUpdates) {
-            // Changing the button text
-            btLocAtualizar.setText("Parar Atualização de Local");
-
-            mRequestingLocationUpdates = true;
-
-            // Starting the location updates
-            startLocationUpdates();
-
-            Log.d(TAG, "Periodic location updates started!");
-
-        } else {
-            // Changing the button text
-            btLocAtualizar.setText("Iniciar Atualização de Local");
-
-            mRequestingLocationUpdates = false;
-
-            // Stopping the location updates
-            stopLocationUpdates();
-
-            Log.d(TAG, "Periodic location updates stopped!");
-        }
-    }
-
-    protected void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        mLocationRequest.setFastestInterval(FATEST_INTERVAL);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setSmallestDisplacement(DISPLACEMENT); // 10 meters
-    }
-
-    protected void startLocationUpdates() {
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.getFusedLocationProviderClient(this);
-
-    }
-    protected void stopLocationUpdates() {
-        LocationServices.getFusedLocationProviderClient(this); // .removeLocationUpdates(mGoogleApiClientLocation, this);
-    }
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-
-        Toast.makeText(getApplicationContext(), "Location changed!",
-                Toast.LENGTH_SHORT).show();
-
-        // Displaying the new location on UI
-        displayLocation();
-    }
 }
-
