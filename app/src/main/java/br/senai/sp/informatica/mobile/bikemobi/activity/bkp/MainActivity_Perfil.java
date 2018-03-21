@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.activity;
+package br.senai.sp.informatica.mobile.bikemobi.activity.bkp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +20,11 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.activity.AvaliacaoActivity;
+import br.senai.sp.informatica.mobile.bikemobi.activity.CadastroActivity;
+import br.senai.sp.informatica.mobile.bikemobi.activity.HistoricoActivity;
+import br.senai.sp.informatica.mobile.bikemobi.activity.PerfilActivity;
+import br.senai.sp.informatica.mobile.bikemobi.activity.bkp.RotaActivity;
 import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Login;

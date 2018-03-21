@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.senai.sp.informatica.mobile.bikemobi.activity.PerfilActivity">
+    tools:context="br.senai.sp.informatica.mobile.bikemobi.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,7 +20,19 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/activity_perfil" />
+    <include layout="@layout/activity_rota" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:clickable="true"
+        app:elevation="16dp"
+        android:layout_gravity="bottom|center"
+        app:srcCompat="@android:drawable/ic_menu_send" />
 
 
 

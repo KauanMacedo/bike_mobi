@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.activity;
+package br.senai.sp.informatica.mobile.bikemobi.activity.bkp;
 
 import android.content.Intent;
 import android.os.Bundle;

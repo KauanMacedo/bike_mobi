@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.activity;
+package br.senai.sp.informatica.mobile.bikemobi.activity.bkp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -60,6 +60,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.activity.NavActivity;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 
 

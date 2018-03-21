@@ -1,4 +1,4 @@
-package br.senai.sp.informatica.mobile.bikemobi.activity;
+package br.senai.sp.informatica.mobile.bikemobi.activity.bkp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.activity.MainActivity;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 
 public class NavActivity_ok_old extends FragmentActivity implements OnMapReadyCallback,
