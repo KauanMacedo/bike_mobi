@@ -2,8 +2,12 @@ package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -54,7 +58,8 @@ import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener,
+        DialogInterface.OnClickListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClientLocation;
@@ -64,6 +69,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private String origem;
     private String destino;
+    private LatLng destinoLatLng;
     private ImageView fechar;
     private TextView rotaInfo;
 
@@ -126,6 +132,12 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                 finish();
             }
         });
+
+
+
+
+
+        Toast.makeText(this, "" + origem, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -346,8 +358,32 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
             mMap.moveCamera(update);
             mMap.animateCamera(zoom);
 
-            Toast.makeText(this, latitude + ", " + longitude + mGoogleApiClientLocation.isConnected(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, latitude + ", " + longitude + mGoogleApiClientLocation.isConnected(), Toast.LENGTH_SHORT).show();
 
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> listAddress;
+            try {
+                listAddress = geocoder.getFromLocationName(destino, 5);
+                Address address = listAddress.get(0);
+                float[] distancia = new float[1];
+                Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude()
+                        , address.getLatitude(), address.getLongitude()
+                , distancia);
+                //Toast.makeText(this, ""+distancia[0], Toast.LENGTH_SHORT).show();
+                if (distancia[0] < 20l){
+                    Toast.makeText(this, "Você chegou!", Toast.LENGTH_SHORT).show();
+
+                    AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+                    alerta.setMessage("Você chegou!");
+                    alerta.setNegativeButton("Compartilhar Passeio", this);
+                    alerta.setNeutralButton("Sair",this);
+                    alerta.setPositiveButton("Avaliar",this);
+                    alerta.setIcon(R.drawable.logo_bike_mobi_v2);
+                    alerta.create();
+                    alerta.show();
+                }
+
+            } catch (IOException e) {}
         } else {
             //Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
 
@@ -424,5 +460,11 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
 
         // Displaying the new location on UI
         displayLocation();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        Intent intent = new Intent(this, AvaliacaoActivity.class);
+        startActivity(intent);
     }
 }
