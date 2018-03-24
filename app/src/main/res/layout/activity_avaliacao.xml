@@ -1,16 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context="br.senai.sp.informatica.mobile.bikemobi.activity.AvaliacaoActivity">
+
 
     <TextView
+        android:id="@+id/tvTrajeto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="AVALIAÇÃO" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Trajeto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <RadioGroup
+        android:id="@+id/rgTrajeto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvTrajeto"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rbTraj1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/rbTraj2"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrajeto" />
+
+        <RadioButton
+            android:id="@+id/rbTraj2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/rbTraj3"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrajeto" />
+
+        <RadioButton
+            android:id="@+id/rbTraj3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrajeto" />
+
+        <RadioButton
+            android:id="@+id/rbTraj4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/rbTraj3"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrajeto" />
+
+        <RadioButton
+            android:id="@+id/rbTraj5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/rbTraj4"
+            app:layout_constraintTop_toBottomOf="@+id/tvTrajeto" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/tvSeguranca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Segurança"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgTrajeto" />
+
+    <RadioGroup
+        android:id="@+id/rgSeguranca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvSeguranca"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rbSeg1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/rbSeg2"
+            app:layout_constraintTop_toBottomOf="@+id/tvSeguranca" />
+
+        <RadioButton
+            android:id="@+id/rbSeg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/rbSeg3"
+            app:layout_constraintTop_toBottomOf="@+id/tvSeguranca" />
+
+        <RadioButton
+            android:id="@+id/rbSeg3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSeguranca" />
+
+        <RadioButton
+            android:id="@+id/rbSeg4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/rbSeg3"
+            app:layout_constraintTop_toBottomOf="@+id/tvSeguranca" />
+
+        <RadioButton
+            android:id="@+id/rbSeg5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/rbSeg4"
+            app:layout_constraintTop_toBottomOf="@+id/tvSeguranca" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btAvalEnviar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="onClickAvalEnviar"
+        android:text="Enviar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgSeguranca" />
+
+
+</android.support.constraint.ConstraintLayout>
 
 
 

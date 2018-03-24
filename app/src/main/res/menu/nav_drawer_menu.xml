@@ -26,12 +26,16 @@
         <item
             android:id="@+id/nav_drawer_avaliacao"
             android:title="Avalie-nos"
-            android:visible="false" />
+            android:visible="true" />
 
 
         <item
             android:id="@+id/nav_drawer_rota"
             android:title="Traçar rota"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_drawer_bt"
+            android:title="Bluetooth"
             android:visible="true" />
     </group>
 

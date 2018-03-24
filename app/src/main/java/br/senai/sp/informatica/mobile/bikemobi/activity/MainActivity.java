@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -177,6 +178,7 @@ public class MainActivity extends AppCompatActivity
                     intent.putExtra("origem", localAtual);
                 }
                 intent.putExtra("destino", etDestino.getText().toString());
+                intent.putExtra("login", login.getId());
                 if (!etDestino.getText().toString().equals("Onde você gostaria de ir?")) {
                     startActivity(intent);
                 } else {
@@ -279,6 +281,9 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_drawer_bt:
+                intent = new Intent(this, BluetoothActivity.class);
+                startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
