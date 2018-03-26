@@ -459,7 +459,17 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                             bSeg.setPositiveButton("Compartilhar Passeio", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-
+                                    Intent intent = new Intent(NavActivity.this, ShareActivity.class);
+                                    intent.putExtra("origem", rotaPesquisada.origemEnd);
+                                    intent.putExtra("destino", destino);
+                                    Calendar dtAtual = Calendar.getInstance();
+                                    Calendar dtInicio = Calendar.getInstance();
+                                    dtInicio.setTime(rotaPesquisada.getCriadoEm());
+                                    long duracao = (dtAtual.getTimeInMillis() - dtInicio.getTimeInMillis()) / 1000 / 60;
+                                    intent.putExtra("duracao", String.valueOf(duracao));
+                                    intent.putExtra("km", String.valueOf(kilometragem));
+                                    intent.putExtra("data", dtAtual.getTime().toString());
+                                    startActivity(intent);
                                 }
                             });
                             bSeg.setIcon(R.mipmap.ic_launcher_bike_mobi);
