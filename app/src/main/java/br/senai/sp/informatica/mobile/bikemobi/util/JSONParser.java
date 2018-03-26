@@ -136,12 +136,22 @@ public class JSONParser {
                     out.close();
 
                     returnCode = con.getResponseCode();
+
+                    Log.d("BikeLog", "returnCode: " + returnCode);
+                    Log.d("BikeLog", "HttpURLConnection.HTTP_CREATED: " + HttpURLConnection.HTTP_CREATED);
                     if(returnCode == HttpURLConnection.HTTP_CREATED) {
                         location = con.getHeaderField("location");
                         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                         data = readJson(in);
                         in.close();
                     }
+                    if (returnCode == HttpURLConnection.HTTP_OK){
+                        location = con.getHeaderField("location");
+                        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                        data = readJson(in);
+                        in.close();
+                    }
+
                     con.disconnect();
                 }
             } catch (IOException ex) {
@@ -156,6 +166,8 @@ public class JSONParser {
             if(callBack != null) {
                 callBack.setResponse(returnCode, location, data);
             }
+            Log.d("BikeLog", "data: " + data);
+
         }
     }
 

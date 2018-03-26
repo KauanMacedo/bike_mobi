@@ -1,6 +1,9 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.util.Date;
 
 /**
  * Created by rodol on 21/03/2018.
@@ -19,6 +22,7 @@ public class RotaPesquisada {
     public double origemLng;
     public String polylinePoints;
     public int idLogin;
+    public Date criadoEm;
 
     public long getDistancia() {
         return distancia;
@@ -98,5 +102,14 @@ public class RotaPesquisada {
 
     public void setIdLogin(int idLogin) {
         this.idLogin = idLogin;
+    }
+
+    @JsonIgnore
+    public Date getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(Date criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }

@@ -598,7 +598,7 @@ public class MainActivity extends AppCompatActivity
             mMap.moveCamera(update);
             mMap.animateCamera(zoom);
 
-            Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
