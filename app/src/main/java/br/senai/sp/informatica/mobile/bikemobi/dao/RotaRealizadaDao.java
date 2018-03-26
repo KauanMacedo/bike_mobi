@@ -3,6 +3,7 @@ package br.senai.sp.informatica.mobile.bikemobi.dao;
 import android.util.Log;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -23,19 +24,28 @@ public class RotaRealizadaDao {
     private RotaRealizadaDao() {
     }
 
-    public void postRotaReal(RotaRealizada rota){
+    public int postRotaReal(RotaRealizada rota){
+        int resposta = 0;
         try{
-            ObjectMapper mapper = new ObjectMapper();
-            json = mapper.writeValueAsString(rota);
-            new JSONParser.Incluir(url + "Cadastrar", json, new JSONParser.LocationAndDataCallBack() {
+            ObjectMapper objectMapper = new ObjectMapper();
+            json = objectMapper.writeValueAsString(rota);
+
+            String jsonParser = new JSONParser.Incluir(url + "cadastrar", json, new JSONParser.LocationAndDataCallBack() {
                 @Override
                 public void setResponse(int code, String location, String json) {
-                    Log.d("BikeLog", "url: " + url + "cadastrar" + " . code: " + code + ". json: " + json);
+                    //Log.d("BikeLog", "url: " + url + "cadastrar" + " . code: " + code + ". json: " + json + " location: " + location);
                 }
-            });
+            }).execute().get();
+            //Log.d("BikeLog", "jsonParser: "+ jsonParser);
+            if (jsonParser != null) {
+                JSONObject obj = new JSONObject(jsonParser);
+                resposta = obj.getInt("ultimoIdCadastrado");
+            }
+            //Log.d("BikeLog", "ultimoIdCadastrado: "+ resposta);
 
-        } catch (IOException e){
-            Log.d("BikeLog", "Erro ao postRotaRealizada. Código de Retorno: " + code + ". URL: " + url + "cadastrar" + ". Início do erro: "+ e);
+        }catch (Exception e){
+            Log.d("BikeLog", "Erro ao postRotaPesquisada. Código de Retorno: " + code + ". URL: " + url + "cadastrar" + ". Início do erro: "+ e);
         }
+        return resposta;
     }
 }

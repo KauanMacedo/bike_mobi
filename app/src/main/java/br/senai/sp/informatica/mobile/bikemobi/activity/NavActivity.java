@@ -47,12 +47,15 @@ import com.google.maps.model.TravelMode;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.dao.AvaliacaoDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.RotaPesquisadaDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.RotaRealizadaDao;
+import br.senai.sp.informatica.mobile.bikemobi.model.Avaliacao;
 import br.senai.sp.informatica.mobile.bikemobi.model.RotaPesquisada;
 import br.senai.sp.informatica.mobile.bikemobi.model.RotaRealizada;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
@@ -60,8 +63,7 @@ import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
 public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,
-        DialogInterface.OnClickListener{
+        LocationListener{
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClientLocation;
@@ -77,6 +79,10 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private int idLogin;
     private Location localInicial = null;
+    private Location localAnterior = null;
+    private int idRotaPesq;
+    private int idRotaReal = 0;
+    private float kilometragem = 0;
 
     private LatLng destinoLatLng;
     private ImageView fechar;
@@ -100,6 +106,8 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private RotaRealizadaDao rotaRealDao = RotaRealizadaDao.instance;
     private RotaRealizada rotaReal;
+
+    private AvaliacaoDao avaliacaoDao = AvaliacaoDao.instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +161,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
 
-        Toast.makeText(this, "" + origem, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + origem, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -247,9 +255,10 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                     rotaPesquisada.setPolylinePoints(String.valueOf(results.routes[overview].overviewPolyline));
 
                     rotaPesquisada.setIdLogin(idLogin);
+                    rotaPesquisada.setCriadoEm(Calendar.getInstance().getTime());
 
-                    rotaPesqDao.postRotaPesquisada(rotaPesquisada);
-                    Log.d("BikeLog", results.routes[overview].legs[overview].distance + "");
+                    idRotaPesq = rotaPesqDao.postRotaPesquisada(rotaPesquisada);
+                    //Log.d("BikeLog", results.routes[overview].legs[overview].distance + "");
 
                 }
             } catch (Exception e) {
@@ -406,19 +415,28 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                         , address.getLatitude(), address.getLongitude()
                 , distancia);
                 //Toast.makeText(this, ""+distancia[0], Toast.LENGTH_SHORT).show();
+                if (localAnterior != null) {
+                    float[] kmFloat = new float[1];
+                    Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude()
+                            , localAnterior.getLatitude(), localAnterior.getLongitude()
+                            , kmFloat);
+                    kilometragem = kilometragem + kmFloat[0];
+                }
                 if (distancia[0] < 20l){
-                    Toast.makeText(this, "Você chegou!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Você chegou!", Toast.LENGTH_SHORT).show();
 
                     CharSequence[] charTraj = {"Ótimo", "Bom", "Regular","Ruim", "Péssimo"};
 
-                    final AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-                    alerta.setTitle("Você chegou! Avalie o trajeto.");
+                    final AlertDialog.Builder bTraj = new AlertDialog.Builder(this);
+                    bTraj.setTitle("Você chegou! Avalie o trajeto.");
                     //alerta.setMessage("Avalie o trajeto");
-                    alerta.setSingleChoiceItems(charTraj, -1, new DialogInterface.OnClickListener() {
+                    bTraj.setSingleChoiceItems(charTraj, -1, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
                             avalTraj = which + 1;
-                            Toast.makeText(NavActivity.this, avalTraj + "", Toast.LENGTH_SHORT).show();
+
+                            //Toast.makeText(NavActivity.this, avalTraj + "", Toast.LENGTH_SHORT).show();
                             CharSequence[] charSeg = {"Muito Seguro", "Seguro","Médio", "Perigoso", "Muito Perigoso"};
                             final AlertDialog.Builder bSeg = new AlertDialog.Builder(NavActivity.this);
                             bSeg.setTitle("Avalie a segurança.");
@@ -428,38 +446,64 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     avalSeg = which + 1;
-                                    Toast.makeText(NavActivity.this, avalSeg + "", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(NavActivity.this, avalSeg + "", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            bSeg.setNegativeButton("Compartilhar Passeio", this);
-                            bSeg.setNeutralButton("Sair",this);
-                            bSeg.setPositiveButton("Avaliar",this);
+                            bSeg.setNegativeButton("Sair", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    avaliar();
+                                    finish();
+                                }
+                            });
+                            bSeg.setPositiveButton("Compartilhar Passeio", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
                             bSeg.setIcon(R.mipmap.ic_launcher_bike_mobi);
                             bSeg.create();
                             bSeg.show();
+
                         }
                     });
-                    alerta.setNegativeButton("Compartilhar Passeio", this);
-                    alerta.setNeutralButton("Sair",this);
-                    alerta.setPositiveButton("Avaliar",this);
-                    alerta.setIcon(R.mipmap.ic_launcher_bike_mobi);
-                    alerta.create();
-                    alerta.show();
+                    bTraj.setNegativeButton("Sair", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    rotaReal = new RotaRealizada();
-                    rotaReal.setLatInicio(localInicial.getLatitude());
-                    rotaReal.setLatFim(localInicial.getLongitude());
-                    rotaReal.setLatFim(mLastLocation.getLatitude());
-                    rotaReal.setLngFim(mLastLocation.getLongitude());
-                    //Todo: Ajustar duracao e km
-                    rotaReal.setDuracaoString("teste");
-                    rotaReal.setDuracaoInt(11);
-                    rotaReal.setKilometros(11l);
-                    rotaReal.setIdLogin(idLogin);
-                    //rotaReal.setIdRotaPesquisada();
+                        }
+                    });
+                    bTraj.setPositiveButton("Compartilhar Passeio", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                    rotaRealDao.postRotaReal(rotaReal);
+                        }
+                    });
+                    bTraj.setIcon(R.mipmap.ic_launcher_bike_mobi);
+                    bTraj.create();
+                    bTraj.show();
 
+                    if (idRotaReal == 0) {
+                        rotaReal = new RotaRealizada();
+                        rotaReal.setLatInicio(localInicial.getLatitude());
+                        rotaReal.setLatFim(localInicial.getLongitude());
+                        rotaReal.setLatFim(mLastLocation.getLatitude());
+                        rotaReal.setLngFim(mLastLocation.getLongitude());
+                        //Todo: Ajustar duracao e km
+                        Calendar dtAtual = Calendar.getInstance();
+                        Calendar dtInicio = Calendar.getInstance();
+                        dtInicio.setTime(rotaPesquisada.getCriadoEm());
+                        long duracao = (dtAtual.getTimeInMillis() - dtInicio.getTimeInMillis()) / 1000 / 60;
+
+                        rotaReal.setDuracaoString(duracao + " mins");
+                        rotaReal.setDuracaoInt((int)duracao);
+                        rotaReal.setKilometros((int)kilometragem);
+                        rotaReal.setIdLogin(idLogin);
+                        rotaReal.setIdRotaPesquisada(idRotaPesq);
+
+                        idRotaReal = rotaRealDao.postRotaReal(rotaReal);
+                    }
                 }
 
             } catch (IOException e) {
@@ -469,6 +513,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
             //Toast.makeText(this, "(Couldn't get the location. Make sure location is enabled on the device)", Toast.LENGTH_SHORT).show();
 
         }
+        localAnterior = mLastLocation;
     }
 
 
@@ -536,16 +581,19 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onLocationChanged(Location location) {
         mLastLocation = location;
 
-        Toast.makeText(getApplicationContext(), "Location changed!",
-                Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Location changed!", Toast.LENGTH_SHORT).show();
 
         // Displaying the new location on UI
         displayLocation();
     }
 
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-        Intent intent = new Intent(this, AvaliacaoActivity.class);
-        startActivity(intent);
+    public void avaliar(){
+        Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setAvTrajeto(avalTraj);
+        avaliacao.setAvSeguranca(avalSeg);
+        avaliacao.setIdRotaRealizada(idRotaReal);
+        avaliacao.setIdLogin(idLogin);
+
+        avaliacaoDao.postAvaliacao(avaliacao);
     }
 }

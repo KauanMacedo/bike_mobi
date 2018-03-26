@@ -13,8 +13,8 @@ public class RotaRealizada {
     public double latFim;
     public double lngFim;
     public String duracaoString;
-    public long duracaoInt;
-    public long kilometros;
+    public int duracaoInt;
+    public int kilometros;
     public int idLogin;
     public int idRotaPesquisada;
 
@@ -58,19 +58,19 @@ public class RotaRealizada {
         this.duracaoString = duracaoString;
     }
 
-    public long getDuracaoInt() {
+    public int getDuracaoInt() {
         return duracaoInt;
     }
 
-    public void setDuracaoInt(long duracaoInt) {
+    public void setDuracaoInt(int duracaoInt) {
         this.duracaoInt = duracaoInt;
     }
 
-    public long getKilometros() {
+    public int getKilometros() {
         return kilometros;
     }
 
-    public void setKilometros(long kilometros) {
+    public void setKilometros(int kilometros) {
         this.kilometros = kilometros;
     }
 
