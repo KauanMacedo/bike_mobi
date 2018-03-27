@@ -30,7 +30,7 @@
     <string name="email_perfil_key">EMAIL_PERFIL</string>
     <string name="title_activity_nav">Map</string>
     <string name="senha">Senha</string>
-    <string name="avatar">Avatar</string>
+    <string name="avatar">Selecione um avatar</string>
     <string name="cadastro">Cadastro</string>
 
 </resources>

@@ -34,16 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.CadastroActivity"
-            android:parentActivityName=".activity.MainActivity" />
-        <activity
-            android:name=".activity.HistoricoActivity"
-            android:parentActivityName=".activity.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
-        </activity>
+        <activity android:name=".activity.CadastroActivity" />
+        <activity android:name=".activity.HistoricoActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -56,33 +48,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/places_google_key" />
 
-        <activity
-            android:name=".activity.bkp.RotaActivity"
-            android:label="@string/title_activity_rota"
-            android:parentActivityName=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.PerfilActivity"
-            android:label="@string/title_activity_perfil"
-            android:parentActivityName=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.bkp.RotaActivity" />
+        <activity android:name=".activity.PerfilActivity" />
         <activity android:name=".activity.AvaliacaoActivity" />
-        <activity
-            android:name=".activity.NavActivity"
-            android:label="@string/title_activity_nav" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.NavActivity" /><activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.BluetoothActivity" />
-        <activity android:name=".activity.ShareActivity"></activity>
+        <activity android:name=".activity.ShareActivity" />
     </application>
 
 </manifest>

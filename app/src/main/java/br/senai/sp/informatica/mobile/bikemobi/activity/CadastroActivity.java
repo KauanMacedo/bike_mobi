@@ -25,11 +25,9 @@ import br.senai.sp.informatica.mobile.bikemobi.R;
 import br.senai.sp.informatica.mobile.bikemobi.dao.IbgeDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
-import br.senai.sp.informatica.mobile.bikemobi.model.Cidade;
-import br.senai.sp.informatica.mobile.bikemobi.model.Estado;
+import br.senai.sp.informatica.mobile.bikemobi.fragment.DateDialog;
 import br.senai.sp.informatica.mobile.bikemobi.model.Login;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
-import br.senai.sp.informatica.mobile.bikemobi.fragment.DateDialog;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,7 +51,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
     private Calendar calendar;
 
-    private ImageView avatar1, avatar2, avatar3;
+    private ImageView avatar1, avatar2, avatar3, avatar4, avatar5, avatar6;
+    private ImageView ivAvatar;
 
 
     private final static DateFormat fmt = DateFormat.getDateInstance(DateFormat.SHORT);
@@ -69,14 +68,15 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         etSenha = findViewById(R.id.editSenha);
         etDataNascimento = findViewById(R.id.editDataNascimento);
         etBiografia = findViewById(R.id.editBiografia);
-//        etCidade = findViewById(R.id.editCidade);
-//        etEstado = findViewById(R.id.editEstado);
         spEstado = findViewById(R.id.spEstado);
         spCidade = findViewById(R.id.spCidade);
 
         avatar1 = (ImageView) findViewById(R.id.avatar_1);
         avatar2 = (ImageView) findViewById(R.id.avatar_2);
         avatar3 = (ImageView) findViewById(R.id.avatar_3);
+        avatar4 = (ImageView) findViewById(R.id.avatar_4);
+        avatar5 = (ImageView) findViewById(R.id.avatar_5);
+        avatar6 = (ImageView) findViewById(R.id.avatar_6);
 
         calendar = Calendar.getInstance();
         etDataNascimento.setOnClickListener(this);
@@ -162,30 +162,61 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         switch (id) {
             case R.id.mi_salvar:
                 if (!isValidEmail(etEmail.getText().toString())) {
-                    Toast.makeText(this, "E-mail inválido.", Toast.LENGTH_SHORT).show();
+                    etEmail.setError("Campo inválido.");
                     return false;
                 }
+
                 if (TextUtils.isEmpty(etNomeCompleto.getText().toString())) {
-                    Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.nome) + ".", Toast.LENGTH_SHORT).show();
+                    etNomeCompleto.setError("Este campo é obrigatório");
                     return false;
                 }
+
+                if (etNomeCompleto.getText().length() <= 4) {
+                    etNomeCompleto.setError("Este campo deve ter no mínimo de 5 caracteres.");
+                    return false;
+                }
+
                 if (TextUtils.isEmpty(etDataNascimento.getText().toString())) {
-                    Toast.makeText(this, "Preencha a " + this.getResources().getString(R.string.data_de_nascimento) + ".", Toast.LENGTH_SHORT).show();
+                    etDataNascimento.setError("Este campo é obrigatório");
+                    return false;
+                }
+
+                if (spCidade.getSelectedItemPosition() == 0) {
+                    Toast.makeText(this, "Escolha uma cidade.", Toast.LENGTH_SHORT).show();
                     return false;
                 }
 
                 if (TextUtils.isEmpty(etBiografia.getText().toString())) {
-                    Toast.makeText(this, "Preencha a " + this.getResources().getString(R.string.biografia) + ".", Toast.LENGTH_SHORT).show();
+                    etBiografia.setError("Este campo é obrigatório");
                     return false;
                 }
+
                 if (TextUtils.isEmpty(etNomeUsuario.getText().toString())) {
-                    Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.nome_do_usuario) + ".", Toast.LENGTH_SHORT).show();
+                    etNomeUsuario.setError("Este campo é obrigatório");
                     return false;
                 }
+
+                if (etNomeUsuario.getText().length() <= 4) {
+                    etNomeUsuario.setError("Este campo deve ter no mínimo de 5 caracteres.");
+                    return false;
+                }
+
                 if (TextUtils.isEmpty(etEmail.getText().toString())) {
-                    Toast.makeText(this, "Preencha o " + this.getResources().getString(R.string.e_mail) + ".", Toast.LENGTH_SHORT).show();
+                    etEmail.setError("Este campo é obrigatório");
                     return false;
                 }
+
+                if (TextUtils.isEmpty(etSenha.getText().toString())) {
+                    etSenha.setError("Este campo é obrigatório");
+                    return false;
+                }
+
+                if (etSenha.getText().length() <= 5) {
+                    etSenha.setError("Este campo deve ter no mínimo de 6 caracteres.");
+                    return false;
+                }
+
+
                 perfil.setLogin(etNomeUsuario.getText().toString());
                 perfil.setBio(etBiografia.getText().toString());
                 perfil.setNome(etNomeCompleto.getText().toString());
@@ -254,12 +285,19 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void avatarOnClick(View view) {
+
         if (avatar1.isPressed()) {
-            Toast.makeText(this, "Clicou no velho", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Clicou no avatar 1", Toast.LENGTH_SHORT).show();
         } else if (avatar2.isPressed()) {
-            Toast.makeText(this, "Clicou na enfermeira", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Clicou no avatar 2", Toast.LENGTH_SHORT).show();
+        } else if (avatar3.isPressed()) {
+            Toast.makeText(this, "Clicou no avatar 3", Toast.LENGTH_SHORT).show();
+        } else if (avatar4.isPressed()) {
+            Toast.makeText(this, "Clicou no avatar 4", Toast.LENGTH_SHORT).show();
+        } else if (avatar5.isPressed()) {
+            Toast.makeText(this, "Clicou no avatar 5", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Clicou na moça", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Clicou no avatar 6", Toast.LENGTH_SHORT).show();
         }
     }
 }

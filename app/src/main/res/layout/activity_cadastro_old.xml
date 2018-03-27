@@ -27,9 +27,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="casual"
                     android:gravity="center"
                     android:text="@string/avatar"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -42,13 +44,15 @@
                     android:id="@+id/avatar_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginStart="21dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="avatarOnClick"
-                    app:srcCompat="@drawable/veio" />
+                    app:srcCompat="@drawable/man_1" />
 
                 <ImageView
                     android:id="@+id/avatar_2"
@@ -58,19 +62,66 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="avatarOnClick"
-                    app:srcCompat="@drawable/enfermeira" />
+                    app:srcCompat="@drawable/man_2" />
 
                 <ImageView
                     android:id="@+id/avatar_3"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
                     android:clickable="true"
                     android:focusable="true"
                     android:onClick="avatarOnClick"
-                    app:srcCompat="@drawable/moca" />
+                    app:srcCompat="@drawable/man_3" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/avatar_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginStart="21dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="avatarOnClick"
+                    app:srcCompat="@drawable/woman_1" />
+
+                <ImageView
+                    android:id="@+id/avatar_5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="avatarOnClick"
+                    app:srcCompat="@drawable/woman_3" />
+
+                <ImageView
+                    android:id="@+id/avatar_6"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="avatarOnClick"
+                    app:srcCompat="@drawable/woman_2" />
 
             </RelativeLayout>
 
@@ -109,7 +160,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
