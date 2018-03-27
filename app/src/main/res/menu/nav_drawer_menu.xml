@@ -37,6 +37,10 @@
             android:id="@+id/nav_drawer_bt"
             android:title="Bluetooth"
             android:visible="true" />
+        <item
+            android:id="@+id/nav_drawer_bt2"
+            android:title="Bluetooth v2"
+            android:visible="true" />
     </group>
 
 </menu>

@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -51,9 +52,11 @@
         <activity android:name=".activity.bkp.RotaActivity" />
         <activity android:name=".activity.PerfilActivity" />
         <activity android:name=".activity.AvaliacaoActivity" />
-        <activity android:name=".activity.NavActivity" /><activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.NavActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.BluetoothActivity" />
         <activity android:name=".activity.ShareActivity" />
+        <activity android:name=".activity.BluetoothV2Activity"></activity>
     </application>
 
 </manifest>

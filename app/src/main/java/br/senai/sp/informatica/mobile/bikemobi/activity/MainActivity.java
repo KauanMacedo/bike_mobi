@@ -284,6 +284,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_drawer_bt:
                 intent = new Intent(this, BluetoothActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_drawer_bt2:
+                intent = new Intent(this, BluetoothV2Activity.class);
+                startActivity(intent);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
