@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,19 +16,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Toggle LED"
-            android:id="@+id/checkboxLED1"
-            android:layout_marginTop="10dp"
-            android:checked="false"
-            android:layout_alignLeft="@+id/bluetoothStatus"
-            android:layout_alignStart="@+id/bluetoothStatus"
-            android:scaleX="1.7"
-            android:scaleY="1.7"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btBtDiagEsq3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diagonal Esquerda" />
+
+            <Button
+                android:id="@+id/btBtDiagDir3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Diagonal Direita"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/btBtEsq3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esquerda"
+                app:layout_constraintTop_toBottomOf="@+id/btBtDiagEsq3" />
+
+            <Button
+                android:id="@+id/btBtDir3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Direita"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btBtDiagDir3" />
+        </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -96,21 +118,21 @@
             android:layout_toRightOf="@+id/PairedBtn" />
 
         <Button
+            android:id="@+id/PairedBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Show paired Devices"
-            android:id="@+id/PairedBtn"
             android:layout_below="@+id/scan"
-            android:layout_toStartOf="@+id/discover" />
+            android:layout_toStartOf="@+id/discover"
+            android:text="Mostrat Dispositivos Pareados" />
 
         <Button
+            android:id="@+id/discover"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Discover New Devices"
-            android:id="@+id/discover"
             android:layout_below="@+id/off"
+            android:layout_toEndOf="@+id/checkboxLED1"
             android:layout_toRightOf="@+id/checkboxLED1"
-            android:layout_toEndOf="@+id/checkboxLED1" />
+            android:text="Encontrar Novos Dispositivos" />
 
         <ListView
             android:layout_width="wrap_content"

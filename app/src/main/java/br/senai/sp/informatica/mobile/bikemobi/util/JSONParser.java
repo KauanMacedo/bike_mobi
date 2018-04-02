@@ -19,6 +19,22 @@ public class JSONParser {
         con.setRequestProperty("Content-Type", "application/json");
         con.setRequestProperty("Accept", "application/json");
         con.setRequestProperty("Accept-Charset", "utf-8");
+        con.setRequestProperty("Authorization"
+                , "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI4IiwiOCJdLCJqdGkiOiJhNzk0MDc5NmIxZWQ0ZjU1YjUxYjc5NjAwZDJkNzViZiIsIk5vbWUiOiJyYW5kcmFkZTMiLCJlbWFpbCI6InJvZG9sZm8uYW5kcmFkZUBmYXRlYy5zcC5nb3YuYnIiLCJuYmYiOjE1MjI1MDkwNzcsImV4cCI6MTUyMjUxMjY3NywiaWF0IjoxNTIyNTA5MDc3LCJpc3MiOiJCaWtlTW9iaUlzc3VlciIsImF1ZCI6IkJpa2VNb2JpQXVkaWVuY2UifQ.DxvVuhgpufDYFN906a-3e9W-Elek-x2avUDtTyiWt6rYWoopOtGrDdND2qpK-YTMd-x3SFfgTRjkDU1udHJ_LceTzFRHiLq64awD6A6YNQh88kGBT5JtVzwxA06Qd43DCuILt5gLf_N4Ht5WPBKbYsu023nHKwCauLHilHTiUAN2_YF88osYaGoz01xwvpQLzcsp7v_Rkf4CX33j8xV0oezZV0XY9n-P6hSGTFUfdBJSZS7ZCM_hK0Vs_yPod879egy5OstQNLHG8KN6DjikFeKgq4ZgQwgkLc-azafPTORIsr-L-e-XrfY_pJGRzwt1vAkQcu5NgeO_GBTjycvpbw");
+        con.setConnectTimeout(15000);
+        con.setReadTimeout(10000);
+
+        return con;
+    }
+
+    private static HttpURLConnection configConnection(String url, String token)
+            throws MalformedURLException, IOException {
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Accept-Charset", "utf-8");
+        con.setRequestProperty("Authorization"
+                , "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI4IiwiOCJdLCJqdGkiOiJhNzk0MDc5NmIxZWQ0ZjU1YjUxYjc5NjAwZDJkNzViZiIsIk5vbWUiOiJyYW5kcmFkZTMiLCJlbWFpbCI6InJvZG9sZm8uYW5kcmFkZUBmYXRlYy5zcC5nb3YuYnIiLCJuYmYiOjE1MjI1MDkwNzcsImV4cCI6MTUyMjUxMjY3NywiaWF0IjoxNTIyNTA5MDc3LCJpc3MiOiJCaWtlTW9iaUlzc3VlciIsImF1ZCI6IkJpa2VNb2JpQXVkaWVuY2UifQ.DxvVuhgpufDYFN906a-3e9W-Elek-x2avUDtTyiWt6rYWoopOtGrDdND2qpK-YTMd-x3SFfgTRjkDU1udHJ_LceTzFRHiLq64awD6A6YNQh88kGBT5JtVzwxA06Qd43DCuILt5gLf_N4Ht5WPBKbYsu023nHKwCauLHilHTiUAN2_YF88osYaGoz01xwvpQLzcsp7v_Rkf4CX33j8xV0oezZV0XY9n-P6hSGTFUfdBJSZS7ZCM_hK0Vs_yPod879egy5OstQNLHG8KN6DjikFeKgq4ZgQwgkLc-azafPTORIsr-L-e-XrfY_pJGRzwt1vAkQcu5NgeO_GBTjycvpbw");
         con.setConnectTimeout(15000);
         con.setReadTimeout(10000);
 
@@ -137,8 +153,8 @@ public class JSONParser {
 
                     returnCode = con.getResponseCode();
 
-                    Log.d("BikeLog", "returnCode: " + returnCode);
-                    Log.d("BikeLog", "HttpURLConnection.HTTP_CREATED: " + HttpURLConnection.HTTP_CREATED);
+                    //Log.d("BikeLog", "returnCode: " + returnCode);
+                    //Log.d("BikeLog", "HttpURLConnection.HTTP_CREATED: " + HttpURLConnection.HTTP_CREATED);
                     if(returnCode == HttpURLConnection.HTTP_CREATED) {
                         location = con.getHeaderField("location");
                         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -166,7 +182,7 @@ public class JSONParser {
             if(callBack != null) {
                 callBack.setResponse(returnCode, location, data);
             }
-            Log.d("BikeLog", "data: " + data);
+            //Log.d("BikeLog", "data: " + data);
 
         }
     }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,13 +22,18 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
+import br.senai.sp.informatica.mobile.bikemobi.model.Login;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
+import br.senai.sp.informatica.mobile.bikemobi.util.SaveSharedPreference;
 
 public class PerfilActivity extends AppCompatActivity{
 
     private PerfilDao dao = PerfilDao.instance;
     private Perfil perfil;
+    private LoginDao loginDao = LoginDao.instance;
+    private Login login;
 
     private TextView tvNome;
     private TextView tvData;
@@ -51,12 +58,25 @@ public class PerfilActivity extends AppCompatActivity{
         getDadosPerfil();
 
         //inicializarComponentes();
+        FloatingActionButton fabEditarPerfil = findViewById(R.id.fabEditarPerfil);
+        fabEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CadastroActivity.class);
+                startActivityForResult(intent, ATUALIZA_PERFIL);
+            }
+        });
     }
-    @SuppressLint("SetTextI18n")
+
     public void getDadosPerfil() {
-        perfil = dao.getPerfil(1l);
+        /*perfil = dao.getPerfil(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
 
         if (perfil != null) {
+        */
+        login = loginDao.getLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
+
+        if(login != null){
+            perfil = login.getPerfil();
             tvNome.setText(perfil.getNome());
 
             Calendar dtNascimento = Calendar.getInstance();
@@ -71,6 +91,16 @@ public class PerfilActivity extends AppCompatActivity{
             tvLocalidade.setText(perfil.getCidade() + "/" + perfil.getEstado());
 
 
+        } else {
+            Toast.makeText(this, "Não foi possível acessar informações de Perfil. Por favor, tente novamente mais tarde.", Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ATUALIZA_PERFIL){
+            getDadosPerfil();
         }
     }
 }

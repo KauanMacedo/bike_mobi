@@ -28,6 +28,7 @@ import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.fragment.DateDialog;
 import br.senai.sp.informatica.mobile.bikemobi.model.Login;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
+import br.senai.sp.informatica.mobile.bikemobi.util.SaveSharedPreference;
 
 public class CadastroActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -87,6 +88,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
         List<String> siglasEstados = ibgeDao.listarSiglasEstados(ibgeDao.listarEstados());
 
+        Log.d("BikeLog", "token: " + loginDao.getToken());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_bikemobi, siglasEstados);
         ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
@@ -107,19 +109,47 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        perfil = perfilDao.getPerfil(1l);
-        if (perfil != null) {
-            etNomeCompleto.setText(perfil.getNome());
-            etBiografia.setText(perfil.getBio());
-            etDataNascimento.setText(fmt.format(perfil.getDataNascimento()));
-            calendar.setTime(perfil.getDataNascimento());
-            //etEstado.setText(perfil.getEstado());
-            spEstado.setSelection(siglasEstados.indexOf(perfil.getEstado()));
+        //Log.d("BikeLog", loginDao.getIdLogin() + "");
+        if (!SaveSharedPreference.getId(getApplication()).isEmpty()) {
+            //perfil = perfilDao.getPerfil(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
+            login = loginDao.getLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
+            perfil = login.getPerfil();
+            if (perfil != null) {
+                etNomeCompleto.setText(perfil.getNome());
+                etBiografia.setText(perfil.getBio());
+                etDataNascimento.setText(fmt.format(perfil.getDataNascimento()));
+                calendar.setTime(perfil.getDataNascimento());
+                //etEstado.setText(perfil.getEstado());
+                spEstado.setSelection(siglasEstados.indexOf(perfil.getEstado()));
 
 
-            int idEstado = ibgeDao.getIdEstado(perfil.getEstado());
+                int idEstado = ibgeDao.getIdEstado(perfil.getEstado());
 
-            List<String> nomesCidades = ibgeDao.listarNomesCidades(ibgeDao.listarCidades(idEstado));
+                List<String> nomesCidades = ibgeDao.listarNomesCidades(ibgeDao.listarCidades(idEstado));
+
+                arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_bikemobi, nomesCidades);
+                spinnerArrayAdapter = arrayAdapter;
+                spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item_bikemobi);
+                spCidade.setAdapter(spinnerArrayAdapter);
+
+
+                //etCidade.setText(perfil.getCidade());
+                spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
+
+            }
+            //login = loginDao.getLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
+            if (login != null) {
+                etEmail.setText(login.getEmail());
+                etNomeUsuario.setText(login.getNomeUsuario());
+                etSenha.setText(login.getSenha());
+            }
+        } else {
+            perfil = new Perfil();
+            login = new Login();
+
+            spEstado.setSelection(siglasEstados.indexOf("SP"));
+
+            List<String> nomesCidades = ibgeDao.listarNomesCidades(ibgeDao.listarCidades(35));
 
             arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item_bikemobi, nomesCidades);
             spinnerArrayAdapter = arrayAdapter;
@@ -128,26 +158,14 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
 
             //etCidade.setText(perfil.getCidade());
-            spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
-
+            spCidade.setSelection(9);
         }
-
-
-        login = loginDao.getLogin(1l);
-        if (login != null) {
-            etEmail.setText(login.getEmail());
-            etNomeUsuario.setText(login.getNomeUsuario());
-            etSenha.setText(login.getSenha());
-        }
-
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
-
     }
 
     @Override
@@ -159,81 +177,31 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        int resposta = 0;
         switch (id) {
             case R.id.mi_salvar:
-                if (!isValidEmail(etEmail.getText().toString())) {
-                    etEmail.setError("Campo inválido.");
+                if (validar()) {
+                    perfil.setLogin(etNomeUsuario.getText().toString());
+                    perfil.setBio(etBiografia.getText().toString());
+                    perfil.setNome(etNomeCompleto.getText().toString());
+                    Date dataNascimento = new Date(calendar.getTimeInMillis() + 24 * 60 * 60 * 1000);
+                    perfil.setDataNascimento(dataNascimento);
+                    //perfil.setCidade(etCidade.getText().toString());
+                    perfil.setCidade(spCidade.getSelectedItem().toString());
+                    //perfil.setEstado(etEstado.getText().toString());
+                    perfil.setEstado(spEstado.getSelectedItem().toString());
+
+                    login.setEmail(etEmail.getText().toString());
+                    login.setNomeUsuario(etNomeUsuario.getText().toString());
+                    login.setSenha(etSenha.getText().toString());
+
+                    login.setPerfil(perfil);
+                    resposta = loginDao.alterar(login);
+                    //perfilDao.setPerfil(perfil);
+                    setResult(RESULT_OK);
+                } else{
                     return false;
                 }
-
-                if (TextUtils.isEmpty(etNomeCompleto.getText().toString())) {
-                    etNomeCompleto.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (etNomeCompleto.getText().length() <= 4) {
-                    etNomeCompleto.setError("Este campo deve ter no mínimo de 5 caracteres.");
-                    return false;
-                }
-
-                if (TextUtils.isEmpty(etDataNascimento.getText().toString())) {
-                    etDataNascimento.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (spCidade.getSelectedItemPosition() == 0) {
-                    Toast.makeText(this, "Escolha uma cidade.", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-
-                if (TextUtils.isEmpty(etBiografia.getText().toString())) {
-                    etBiografia.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (TextUtils.isEmpty(etNomeUsuario.getText().toString())) {
-                    etNomeUsuario.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (etNomeUsuario.getText().length() <= 4) {
-                    etNomeUsuario.setError("Este campo deve ter no mínimo de 5 caracteres.");
-                    return false;
-                }
-
-                if (TextUtils.isEmpty(etEmail.getText().toString())) {
-                    etEmail.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (TextUtils.isEmpty(etSenha.getText().toString())) {
-                    etSenha.setError("Este campo é obrigatório");
-                    return false;
-                }
-
-                if (etSenha.getText().length() <= 5) {
-                    etSenha.setError("Este campo deve ter no mínimo de 6 caracteres.");
-                    return false;
-                }
-
-
-                perfil.setLogin(etNomeUsuario.getText().toString());
-                perfil.setBio(etBiografia.getText().toString());
-                perfil.setNome(etNomeCompleto.getText().toString());
-                Date dataNascimento = new Date(calendar.getTimeInMillis() + 24 * 60 * 60 * 1000);
-                perfil.setDataNascimento(dataNascimento);
-                //perfil.setCidade(etCidade.getText().toString());
-                perfil.setCidade(spCidade.getSelectedItem().toString());
-                //perfil.setEstado(etEstado.getText().toString());
-                perfil.setEstado(spEstado.getSelectedItem().toString());
-
-                login.setEmail(etEmail.getText().toString());
-                login.setNomeUsuario(etNomeUsuario.getText().toString());
-
-
-                loginDao.setLogin(login);
-                perfilDao.setPerfil(perfil);
-                setResult(RESULT_OK);
                 break;
         }
         finish();
@@ -281,6 +249,10 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         spCidade.setAdapter(spinnerArrayAdapter);
         if (perfil != null) {
             spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
+        } else {
+            if (nomesCidades.indexOf("São Paulo") > 0){
+                spCidade.setSelection(nomesCidades.indexOf("São Paulo"));
+            }
         }
     }
 
@@ -299,5 +271,64 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         } else {
             Toast.makeText(this, "Clicou no avatar 6", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean validar(){
+        boolean validado = true;
+        if (!isValidEmail(etEmail.getText().toString())) {
+            etEmail.setError("Campo inválido.");
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etNomeCompleto.getText().toString())) {
+            etNomeCompleto.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (etNomeCompleto.getText().length() <= 4) {
+            etNomeCompleto.setError("Este campo deve ter no mínimo de 5 caracteres.");
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etDataNascimento.getText().toString())) {
+            etDataNascimento.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (spCidade.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Escolha uma cidade.", Toast.LENGTH_SHORT).show();
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etBiografia.getText().toString())) {
+            etBiografia.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etNomeUsuario.getText().toString())) {
+            etNomeUsuario.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (etNomeUsuario.getText().length() <= 4) {
+            etNomeUsuario.setError("Este campo deve ter no mínimo de 5 caracteres.");
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etEmail.getText().toString())) {
+            etEmail.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (TextUtils.isEmpty(etSenha.getText().toString())) {
+            etSenha.setError("Este campo é obrigatório");
+            validado =  false;
+        }
+
+        if (etSenha.getText().length() <= 5) {
+            etSenha.setError("Este campo deve ter no mínimo de 6 caracteres.");
+            validado =  false;
+        }
+        return validado;
     }
 }
