@@ -54,4 +54,15 @@
         android:text="@string/localidade"
         android:textSize="13sp" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEditarPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageViewPerfil"
+        android:layout_toEndOf="@+id/textLocalidadePerfil"
+        android:layout_toRightOf="@+id/textLocalidadePerfil"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
 </RelativeLayout>

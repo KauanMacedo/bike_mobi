@@ -18,6 +18,8 @@ public class Login {
 
     private String senha;
 
+    private Perfil perfil;
+
     public Login() {
 
     }
@@ -52,6 +54,14 @@ public class Login {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     @Override

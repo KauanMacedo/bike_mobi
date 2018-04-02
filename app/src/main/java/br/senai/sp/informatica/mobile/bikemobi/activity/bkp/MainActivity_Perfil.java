@@ -20,11 +20,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
-import br.senai.sp.informatica.mobile.bikemobi.activity.AvaliacaoActivity;
 import br.senai.sp.informatica.mobile.bikemobi.activity.CadastroActivity;
 import br.senai.sp.informatica.mobile.bikemobi.activity.HistoricoActivity;
 import br.senai.sp.informatica.mobile.bikemobi.activity.PerfilActivity;
-import br.senai.sp.informatica.mobile.bikemobi.activity.bkp.RotaActivity;
 import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Login;
@@ -149,8 +147,8 @@ public class MainActivity_Perfil extends AppCompatActivity
     }
 
     public void getDados() {
-        perfil = dao.getPerfil(1l);
-        login = loginDao.getLogin(1l);
+        perfil = dao.getPerfil(loginDao.getIdLogin());
+        login = loginDao.getLogin(loginDao.getIdLogin());
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();

@@ -1,7 +1,6 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -59,18 +58,18 @@ import com.google.maps.model.TravelMode;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import br.senai.sp.informatica.mobile.bikemobi.R;
+import br.senai.sp.informatica.mobile.bikemobi.activity.bkp.AvaliacaoActivity;
 import br.senai.sp.informatica.mobile.bikemobi.dao.LoginDao;
 import br.senai.sp.informatica.mobile.bikemobi.dao.PerfilDao;
 import br.senai.sp.informatica.mobile.bikemobi.model.Login;
 import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
+import br.senai.sp.informatica.mobile.bikemobi.util.SaveSharedPreference;
 
 
 /**
@@ -273,8 +272,7 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_drawer_avaliacao:
-                intent = new Intent(this, AvaliacaoActivity.class);
-                startActivity(intent);
+
                 break;
 
             case R.id.nav_drawer_rota:
@@ -288,6 +286,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_drawer_bt2:
                 intent = new Intent(this, BluetoothV2Activity.class);
                 startActivity(intent);
+                break;
+            case R.id.nav_drawer_bt3:
+                intent = new Intent(this, BluetoothV3Activity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_drawe_login:
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_drawer_logout:
+                SaveSharedPreference.clearUserName(getApplicationContext());
+                finish();
                 break;
         }
 
@@ -311,20 +321,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getDados() {
-        perfil = dao.getPerfil(1l);
-        login = loginDao.getLogin(1l);
+        //perfil = dao.getPerfil(loginDao.getIdLogin());
+        //login = loginDao.getLogin(loginDao.getIdLogin());
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
 
-        if (perfil != null) {
-            editor.putString(this.getResources().getString(R.string.nome_perfil_key), perfil.getNome());
-
-        }
-
-        if (login != null) {
-            editor.putString(this.getResources().getString(R.string.email_perfil_key), login.getEmail());
-        }
+        editor.putString(this.getResources().getString(R.string.nome_perfil_key), SaveSharedPreference.getUser(getApplicationContext()));
+        editor.putString(this.getResources().getString(R.string.email_perfil_key), SaveSharedPreference.getEmail(getApplicationContext()));
         editor.apply();
     }
 

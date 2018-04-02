@@ -53,6 +53,7 @@ public class Perfil {
         this.qtdAtualizacoes = qtdAtualizacoes;
     }
 
+    @JsonIgnore
     public Date getCriadoEm() {
         return criadoEm;
     }
@@ -79,6 +80,7 @@ public class Perfil {
         this.atualizadoEm = atualizadoEm;
     }
 
+    @JsonIgnore
     public String getIdLogin() {
         return idLogin;
     }
@@ -164,6 +166,7 @@ public class Perfil {
         this.avatarUrl = avatarUrl;
     }
 
+    @JsonIgnore
     public Date getDataCriacao() {
         return dataCriacao;
     }

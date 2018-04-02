@@ -23,13 +23,13 @@ public class PerfilDao {
     private PerfilDao() {
     }
 
-    public Perfil getPerfil(Long id){
+    public Perfil getPerfil(final int id){
         Perfil perfil = null;
         try{
-            String json = new JSONParser.Consultar(url + "buscarid/1", new JSONParser.DataCallBack() {
+            String json = new JSONParser.Consultar(url + "buscarid/" + id, new JSONParser.DataCallBack() {
                 @Override
                 public void setResponse(int code, String json) {
-                    Log.d("BikeLog", "url: " + url + "buscarid/1" + " . code: " + code + ". json: " + json);
+                    Log.d("BikeLog", "url: " + url + "buscarid/" + id + " . code: " + code + ". json: " + json);
                 }
             }).execute().get();
 
@@ -45,6 +45,7 @@ public class PerfilDao {
         }
         return perfil;
     }
+
     public void setPerfil(Perfil perfil){
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -57,4 +58,6 @@ public class PerfilDao {
             }).execute();
         } catch (Exception e){Log.d("BikeLog", "Erro ao atualizar." + e);}
     }
+
+
 }
