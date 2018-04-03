@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
             byte[] data = Base64.decode("D201AFD3E79BF74CBDCAC73E88B9B969", Base64.DEFAULT);
             String text = new String(data, "UTF-8");
             Log.d("BikeLog", text);
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +65,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void login(){
+
+    public void login() {
 
         if (!validate()) {
             onLoginFailed();
@@ -138,14 +140,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Não foi possível entrar.", Toast.LENGTH_LONG).show();
-
         btLogin.setEnabled(true);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CADASTRO){
-            if (resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CADASTRO) {
+            if (resultCode == RESULT_OK) {
                 login();
             }
         }
@@ -158,14 +159,14 @@ public class LoginActivity extends AppCompatActivity {
         String password = senha.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailUser.setError("digite um endereço de e-mail válido");
+            emailUser.setError("Digite um endereço de e-mail válido");
             valid = false;
         } else {
             emailUser.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            senha.setError("entre 4 e 10 caracteres alfanuméricos");
+            senha.setError("Entre 4 e 10 caracteres alfanuméricos");
             valid = false;
         } else {
             senha.setError(null);

@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.mobile.bikemobi.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private EditText etNomeCompleto;
     private EditText etDataNascimento;
     private EditText etBiografia;
+    private String urlAvatar;
     private EditText etCidade;
     private EditText etEstado;
 
@@ -72,12 +74,12 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         spEstado = findViewById(R.id.spEstado);
         spCidade = findViewById(R.id.spCidade);
 
-        avatar1 = (ImageView) findViewById(R.id.avatar_1);
-        avatar2 = (ImageView) findViewById(R.id.avatar_2);
-        avatar3 = (ImageView) findViewById(R.id.avatar_3);
-        avatar4 = (ImageView) findViewById(R.id.avatar_4);
-        avatar5 = (ImageView) findViewById(R.id.avatar_5);
-        avatar6 = (ImageView) findViewById(R.id.avatar_6);
+        avatar1 = findViewById(R.id.avatar_1);
+        avatar2 = findViewById(R.id.avatar_2);
+        avatar3 = findViewById(R.id.avatar_3);
+        avatar4 = findViewById(R.id.avatar_4);
+        avatar5 = findViewById(R.id.avatar_5);
+        avatar6 = findViewById(R.id.avatar_6);
 
         calendar = Calendar.getInstance();
         etDataNascimento.setOnClickListener(this);
@@ -182,6 +184,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             case R.id.mi_salvar:
                 if (validar()) {
                     perfil.setLogin(etNomeUsuario.getText().toString());
+                    perfil.setAvatarUrl(urlAvatar);
                     perfil.setBio(etBiografia.getText().toString());
                     perfil.setNome(etNomeCompleto.getText().toString());
                     Date dataNascimento = new Date(calendar.getTimeInMillis() + 24 * 60 * 60 * 1000);
@@ -199,7 +202,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                     resposta = loginDao.alterar(login);
                     //perfilDao.setPerfil(perfil);
                     setResult(RESULT_OK);
-                } else{
+                } else {
                     return false;
                 }
                 break;
@@ -250,7 +253,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         if (perfil != null) {
             spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
         } else {
-            if (nomesCidades.indexOf("São Paulo") > 0){
+            if (nomesCidades.indexOf("São Paulo") > 0) {
                 spCidade.setSelection(nomesCidades.indexOf("São Paulo"));
             }
         }
@@ -259,75 +262,81 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     public void avatarOnClick(View view) {
 
         if (avatar1.isPressed()) {
-            Toast.makeText(this, "Clicou no avatar 1", Toast.LENGTH_SHORT).show();
+            avatar1.setImageResource(R.drawable.man_1_check);
+            urlAvatar = "https://image.ibb.co/hdwL9x/man_1.png";
         } else if (avatar2.isPressed()) {
-            Toast.makeText(this, "Clicou no avatar 2", Toast.LENGTH_SHORT).show();
+            avatar2.setImageResource(R.drawable.man_2_check);
+            urlAvatar = "https://image.ibb.co/kschNH/man_2.png";
         } else if (avatar3.isPressed()) {
-            Toast.makeText(this, "Clicou no avatar 3", Toast.LENGTH_SHORT).show();
+            avatar3.setImageResource(R.drawable.man_3_check);
+            urlAvatar = "https://image.ibb.co/dOiNNH/man_3.png";
         } else if (avatar4.isPressed()) {
-            Toast.makeText(this, "Clicou no avatar 4", Toast.LENGTH_SHORT).show();
+            avatar4.setImageResource(R.drawable.woman_1_check);
+            urlAvatar = "https://image.ibb.co/cx4U2H/woman_1.png";
         } else if (avatar5.isPressed()) {
-            Toast.makeText(this, "Clicou no avatar 5", Toast.LENGTH_SHORT).show();
+            avatar5.setImageResource(R.drawable.woman_3_check);
+            urlAvatar = "https://image.ibb.co/kUewhH/woman_3.png";
         } else {
-            Toast.makeText(this, "Clicou no avatar 6", Toast.LENGTH_SHORT).show();
+            avatar6.setImageResource(R.drawable.woman_2_check);
+            urlAvatar = "https://image.ibb.co/hj7hNH/woman_2.png";
         }
     }
 
-    public boolean validar(){
+    public boolean validar() {
         boolean validado = true;
         if (!isValidEmail(etEmail.getText().toString())) {
             etEmail.setError("Campo inválido.");
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etNomeCompleto.getText().toString())) {
             etNomeCompleto.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (etNomeCompleto.getText().length() <= 4) {
             etNomeCompleto.setError("Este campo deve ter no mínimo de 5 caracteres.");
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etDataNascimento.getText().toString())) {
             etDataNascimento.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (spCidade.getSelectedItemPosition() == 0) {
             Toast.makeText(this, "Escolha uma cidade.", Toast.LENGTH_SHORT).show();
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etBiografia.getText().toString())) {
             etBiografia.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etNomeUsuario.getText().toString())) {
             etNomeUsuario.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (etNomeUsuario.getText().length() <= 4) {
             etNomeUsuario.setError("Este campo deve ter no mínimo de 5 caracteres.");
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etEmail.getText().toString())) {
             etEmail.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (TextUtils.isEmpty(etSenha.getText().toString())) {
             etSenha.setError("Este campo é obrigatório");
-            validado =  false;
+            validado = false;
         }
 
         if (etSenha.getText().length() <= 5) {
             etSenha.setError("Este campo deve ter no mínimo de 6 caracteres.");
-            validado =  false;
+            validado = false;
         }
         return validado;
     }

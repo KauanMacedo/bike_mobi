@@ -11,7 +11,6 @@ import java.util.List;
 
 import br.senai.sp.informatica.mobile.bikemobi.model.Cidade;
 import br.senai.sp.informatica.mobile.bikemobi.model.Estado;
-import br.senai.sp.informatica.mobile.bikemobi.model.Perfil;
 import br.senai.sp.informatica.mobile.bikemobi.util.JSONParser;
 
 /**

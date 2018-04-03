@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="126dp"
         android:adjustViewBounds="false"
-        app:srcCompat="@drawable/veio" />
+        app:srcCompat="@drawable/man_1" />
 
     <TextView
         android:id="@+id/textNomePerfil"
@@ -62,6 +62,7 @@
         android:layout_toEndOf="@+id/textLocalidadePerfil"
         android:layout_toRightOf="@+id/textLocalidadePerfil"
         android:clickable="true"
+        android:focusable="true"
         app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
