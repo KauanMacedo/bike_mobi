@@ -146,7 +146,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CADASTRO){
             if (resultCode == RESULT_OK){
-                login();
+                //login();
+                Toast.makeText(this, "Cadastro realizado. Faça seu logon e bem vindo ao BikeMobi!", Toast.LENGTH_LONG).show();
             }
         }
     }

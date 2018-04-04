@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\43255815886\AndroidStudioProjects\bike_mobi\Bikemobi.iml" filepath="C:\Users\43255815886\AndroidStudioProjects\bike_mobi\Bikemobi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bike_mobi.iml" filepath="$PROJECT_DIR$/bike_mobi.iml" />
     </modules>
