@@ -5,45 +5,50 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        android:paddingTop="56dp">
 
-        <ImageView android:src="@drawable/logo_bike_mobi_v2"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+            android:src="@drawable/logo_bike_mobi_v2" />
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
             <EditText
                 android:id="@+id/emailUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email/Usuário"
+                android:hint="@string/email_ou_usuario"
                 android:inputType="textEmailAddress" />
+
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/senha"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:id="@+id/senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="Senha"/>
+                android:hint="@string/senha"
+                android:inputType="textPassword" />
+
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -53,7 +58,7 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
-            android:text="Entrar" />
+            android:text="@string/entrar" />
 
         <TextView
             android:id="@+id/linkCadastro"
@@ -62,7 +67,8 @@
             android:layout_marginBottom="24dp"
             android:gravity="center"
             android:text="Ainda não tem conta? Crie uma"
-            android:textSize="16dip" />
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
 
     </LinearLayout>
 </ScrollView>
