@@ -262,7 +262,7 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     public void avatarOnClick(View view) {
 
         if (avatar1.isPressed()) {
-            avatar1.setImageResource(R.drawable.man_1_check);
+            avatar1.setImageResource(R.drawable.man_1);
             urlAvatar = "https://image.ibb.co/hdwL9x/man_1.png";
         } else if (avatar2.isPressed()) {
             avatar2.setImageResource(R.drawable.man_2_check);
