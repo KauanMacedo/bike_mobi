@@ -61,6 +61,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
     private ImageView avatar1, avatar2, avatar3, avatar4, avatar5, avatar6;
     private ImageView ivAvatar;
 
+    private String avatar;
+
 
     private final static DateFormat fmt = DateFormat.getDateInstance(DateFormat.SHORT);
 
@@ -77,6 +79,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         etBiografia = findViewById(R.id.editBiografia);
         spEstado = findViewById(R.id.spEstado);
         spCidade = findViewById(R.id.spCidade);
+
+        avatar = "";
 
         avatar1 = findViewById(R.id.avatar_1);
         avatar2 = findViewById(R.id.avatar_2);
@@ -238,6 +242,11 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
                     login.setPerfil(perfil);
                     resposta = loginDao.alterar(login);
+
+                    if (!avatar.isEmpty()) {
+                        SaveSharedPreference.setAvatar(getApplicationContext(), avatar);
+                        Log.d("BikeLog", "avatar: " + SaveSharedPreference.getAvatar(getApplicationContext()));
+                    }
                     //perfilDao.setPerfil(perfil);
                     setResult(RESULT_OK);
                 } else {
@@ -299,6 +308,8 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
 
     public void avatarOnClick(View view) {
 
+
+
         ImageView[] listaAvatares = {avatar1, avatar2, avatar3, avatar4, avatar5, avatar6};
         int[] listaImgAvatares = {
                 R.drawable.man_1,
@@ -316,26 +327,32 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
         if (avatar1.isPressed()) {
             avatar1.setImageResource(R.drawable.man_1_check);
             urlAvatar = "https://image.ibb.co/hdwL9x/man_1.png";
+            avatar = "man_1";
 
         } else if (avatar2.isPressed()) {
             avatar2.setImageResource(R.drawable.man_2_check);
             urlAvatar = "https://image.ibb.co/kschNH/man_2.png";
+            avatar = "man_2";
 
         } else if (avatar3.isPressed()) {
             avatar3.setImageResource(R.drawable.man_3_check);
             urlAvatar = "https://image.ibb.co/dOiNNH/man_3.png";
+            avatar = "man_3";
 
         } else if (avatar4.isPressed()) {
             avatar4.setImageResource(R.drawable.woman_1_check);
             urlAvatar = "https://image.ibb.co/cx4U2H/woman_1.png";
+            avatar = "woman_1";
 
         } else if (avatar5.isPressed()) {
             avatar5.setImageResource(R.drawable.woman_3_check);
             urlAvatar = "https://image.ibb.co/kUewhH/woman_2.png";
+            avatar = "woman_3";
 
         } else {
             avatar6.setImageResource(R.drawable.woman_2_check);
             urlAvatar = "https://image.ibb.co/hj7hNH/woman_3.png";
+            avatar = "woman_2";
         }
     }
 

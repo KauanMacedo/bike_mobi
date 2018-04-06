@@ -31,7 +31,7 @@
 
         <activity
             android:name=".activity.MainEmptyActivity"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@style/AppThemeLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -57,6 +57,10 @@ public class LoginDao {
             if (json != null){
                 ObjectMapper mapper = new ObjectMapper();
                 login = mapper.readValue(new StringReader(json), Login.class);
+                if (code == 401){
+                    login(login);
+                    getLogin(id);
+                }
             }
 
         } catch (Exception e){
@@ -66,7 +70,7 @@ public class LoginDao {
         return login;
     }
 
-    public int setLogin(Login login){
+    public int setLogin(final Login login){
         final int[] resposta = new int[1];
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -80,6 +84,10 @@ public class LoginDao {
                 public void setResponse(int code, String location) {
                     resposta[0] = code;
                     Log.d("BikeLog", "url: " + url + "atualizar"+ " . code: " + code + ". location: " + location);
+                    if (code == 401){
+                        login(login);
+                        setLogin(login);
+                    }
                 }
             }).execute();
         } catch (Exception e) {
@@ -88,7 +96,7 @@ public class LoginDao {
         return resposta[0];
     }
 
-    public int postLogin(Login login){
+    public int postLogin(final Login login){
         final int[] resposta = new int[1];
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -99,6 +107,10 @@ public class LoginDao {
                 public void setResponse(int code, String location, String json) {
                     Log.d("BikeLog", "url: " + url + "cadastrar"+ " . code: " + code + ". json: " + json);
                     resposta[0] = code;
+                    if (code == 401){
+                        login(login);
+                        postLogin(login);
+                    }
                 }
             }).execute();
         } catch (Exception e){
@@ -117,6 +129,7 @@ public class LoginDao {
                 @Override
                 public void setResponse(int code, String location, String json) {
                     Log.d("BikeLog", "url: " + url + "login" + " . code: " + code + ". json: " + json + " location: " + location);
+
                 }
             }).execute().get();
 
@@ -158,7 +171,7 @@ public class LoginDao {
         }
         return resposta[0];
     }
-    public int alterarSenha(String email, String user){
+    public int alterarSenha(final String email, final String user){
         final int[] resposta = {0};
         try {
             json = "{\"email\": " + email + ", \"nomeUsuario\": " + user + "}";
@@ -167,6 +180,7 @@ public class LoginDao {
                 public void setResponse(int code, String location, String json) {
                     Log.d("BikeLog", "url: " + url + "esqueciminhasenha. code: " + code + ". json: " + json);
                     resposta[0] = code;
+
                 }
             }).execute();
         }catch (Exception e) {

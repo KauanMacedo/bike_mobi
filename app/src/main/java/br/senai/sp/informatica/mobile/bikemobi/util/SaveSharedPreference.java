@@ -16,6 +16,7 @@ public class SaveSharedPreference {
     static final String PREF_SENHA = "senha_user";
     static final String PREF_ID = "id_user";
     static final String PREF_TOKEN = "token_user";
+    static final String PREF_AVATAR = "avatar_user";
 
     static SharedPreferences getSharedPreferences(Context cont){
         return PreferenceManager.getDefaultSharedPreferences(cont);
@@ -34,6 +35,16 @@ public class SaveSharedPreference {
         Editor editor = getSharedPreferences(cont).edit();
         editor.putString(PREF_SENHA, senha);
         editor.commit();
+    }
+
+    public static void setAvatar(Context cont, String avatar){
+        Editor editor = getSharedPreferences(cont).edit();
+        editor.putString(PREF_AVATAR, avatar);
+        editor.commit();
+    }
+
+    public static String getAvatar(Context cont){
+        return getSharedPreferences(cont).getString(PREF_AVATAR, "");
     }
 
     public static String getUser(Context cont){
