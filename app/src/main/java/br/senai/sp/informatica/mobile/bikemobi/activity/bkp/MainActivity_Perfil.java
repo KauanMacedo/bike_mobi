@@ -2,6 +2,7 @@ package br.senai.sp.informatica.mobile.bikemobi.activity.bkp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -154,6 +156,7 @@ public class MainActivity_Perfil extends AppCompatActivity
         SharedPreferences.Editor editor = preferences.edit();
 
         if (perfil != null) {
+
             tvNome.setText(perfil.getNome());
 
             Calendar dtNascimento = Calendar.getInstance();
