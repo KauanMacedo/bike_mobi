@@ -31,6 +31,7 @@ public class PerfilActivity extends AppCompatActivity{
     private TextView tvLocalidade;
 
     private ImageView ivPerfil;
+    private ImageView ivAvatar;
 
     private final static int ATUALIZA_PERFIL = 0;
 
@@ -45,6 +46,7 @@ public class PerfilActivity extends AppCompatActivity{
         tvNome = findViewById(R.id.textNomePerfil);
         tvData = findViewById(R.id.textDataNascimentoPerfil);
         tvLocalidade = findViewById(R.id.textLocalidadePerfil);
+        ivAvatar = findViewById(R.id.imageViewPerfil);
 
 
         getDadosPerfil();
@@ -85,6 +87,11 @@ public class PerfilActivity extends AppCompatActivity{
 
             tvLocalidade.setText(perfil.getCidade() + ", " + perfil.getEstado());
 
+            if (!SaveSharedPreference.getAvatar(getApplicationContext()).isEmpty()) {
+                ivAvatar.setImageResource(getResources().getIdentifier(SaveSharedPreference.getAvatar(getApplicationContext())
+                        , "drawable"
+                        , getPackageName()));
+            }
 
         } else {
             Toast.makeText(this, "Não foi possível acessar informações de Perfil. Verifique sua internet e tente novamente mais tarde.", Toast.LENGTH_LONG).show();

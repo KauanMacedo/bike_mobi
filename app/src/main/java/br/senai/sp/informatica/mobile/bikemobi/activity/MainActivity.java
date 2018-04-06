@@ -22,10 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,6 +113,8 @@ public class MainActivity extends AppCompatActivity
     private EditText etOrigem;
     private EditText etDestino;
     private TextView tvRotaInfo;
+    private ImageView ivDrawerAvatar;
+    private Button btIniciar;
 
     private String localAtual = "";
 
@@ -149,6 +153,8 @@ public class MainActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         tvNavHeaderNome = header.findViewById(R.id.tvNavHeaderNome);
         tvNavHeaderEmail = header.findViewById(R.id.textViewEditarPerfilNavDrawer);
+        ivDrawerAvatar = header.findViewById(R.id.ivDrawerAvatar);
+        btIniciar = findViewById(R.id.btMainIniciar);
 
         getDados();
 
@@ -165,7 +171,26 @@ public class MainActivity extends AppCompatActivity
                 .enableAutoManage(this, this)
                 .build();
 
+        btIniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(), "Teste", Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(v.getContext(), NavActivity.class);
+                if (!etOrigem.getText().toString().equals("Seu Local")) {
+                    intent.putExtra("origem", etOrigem.getText().toString());
+                } else {
+                    intent.putExtra("origem", localAtual);
+                }
+                intent.putExtra("destino", etDestino.getText().toString());
+                intent.putExtra("login", SaveSharedPreference.getId(getApplicationContext()));
+                if (!etDestino.getText().toString().equals("Onde você gostaria de ir?")) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(v.getContext(), "Escolha um destino.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         FloatingActionButton fab = findViewById(R.id.floatingActionButton3);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +257,15 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         tvNavHeaderNome.setText(preferences.getString(this.getResources().getString(R.string.nome_perfil_key), this.getResources().getString(R.string.nome_perfil_default)));
         tvNavHeaderEmail.setText(preferences.getString(this.getResources().getString(R.string.email_perfil_key), this.getResources().getString(R.string.email_perfil_default)));
+        //Log.d("BikeLog", "avatar: " + (SaveSharedPreference.getAvatar(getApplicationContext()).isEmpty()));
+        if (!SaveSharedPreference.getAvatar(getApplicationContext()).isEmpty()) {
+            ivDrawerAvatar.setImageResource(getResources().getIdentifier(SaveSharedPreference.getAvatar(getApplicationContext())
+                    , "drawable"
+                    , getPackageName()));
 
+            ivDrawerAvatar.getLayoutParams().height = (int) getResources().getDimension(R.dimen.imageview_height);
+            ivDrawerAvatar.getLayoutParams().width = (int) getResources().getDimension(R.dimen.imageview_width);
+        }
         if (mGoogleApiClientLocation != null) {
             mGoogleApiClientLocation.connect();
         }
@@ -393,6 +426,8 @@ public class MainActivity extends AppCompatActivity
                                     + "\n" + String.valueOf(results.routes[overview].legs[overview].distance)
                             , Toast.LENGTH_LONG).show();
                             */
+                }else {
+                    Toast.makeText(getApplicationContext(), "Não foi possível traçar a rota. Verifique sua conexão com a internet.", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 Log.d("BikeLog", "Não foi possível traçar a rota");
