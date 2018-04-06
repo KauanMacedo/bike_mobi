@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
 
-        if (!validate()) {
+        if (!validar()) {
             onLoginFailed();
             return;
         }
@@ -126,8 +126,9 @@ public class LoginActivity extends AppCompatActivity {
                     , obj.getString("Nome")
                     , obj.getString("email")
                     , obj.getJSONArray("unique_name").get(0).toString()
-                    , substr);
+                    , loginDao.getToken());
             SaveSharedPreference.setSenha(getApplicationContext(), senha.getText().toString());
+
 
             //Log.d("BikeLog", obj.getJSONArray("unique_name").get(0) + "");
         } catch (Exception e) {
@@ -139,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Não foi possível entrar.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Não foi possível logar. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_LONG).show();
         btLogin.setEnabled(true);
     }
 
@@ -149,13 +150,13 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CADASTRO){
             if (resultCode == RESULT_OK){
                 //login();
-                Toast.makeText(this, "Cadastro realizado. Faça seu logon e bem vindo ao BikeMobi!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Cadastro realizado. Utilize e-mail e senha para o logon. Bem vindo ao BikeMobi!", Toast.LENGTH_LONG).show();
 
             }
         }
     }
 
-    public boolean validate() {
+    public boolean validar() {
         boolean valid = true;
 
         String email = emailUser.getText().toString();
@@ -168,8 +169,8 @@ public class LoginActivity extends AppCompatActivity {
             emailUser.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            senha.setError("Entre 4 e 10 caracteres alfanuméricos");
+        if (password.isEmpty() || password.length() < 4) {
+            senha.setError("Mínimo 4 caracteres alfanuméricos");
             valid = false;
         } else {
             senha.setError(null);

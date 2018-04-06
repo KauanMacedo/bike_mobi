@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.mobile.bikemobi.model;
 
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 /**

@@ -2,10 +2,14 @@ package br.senai.sp.informatica.mobile.bikemobi.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,12 +142,46 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
                 //etCidade.setText(perfil.getCidade());
                 spCidade.setSelection(nomesCidades.indexOf(perfil.getCidade()));
 
+                etSenha.setFocusable(false);
+                etSenha.setKeyListener(null);
+                etSenha.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final AlertDialog.Builder bSeg = new AlertDialog.Builder(CadastroActivity.this);
+                        bSeg.setTitle("Alterar senha");
+                        bSeg.setMessage("Deseja alterar sua senha?");
+
+                        bSeg.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        bSeg.setPositiveButton("Alterar senha", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                loginDao.alterarSenha(SaveSharedPreference.getEmail(getApplicationContext()), SaveSharedPreference.getUser(getApplicationContext()));
+                                Toast.makeText(getApplicationContext(), "Em breve você receberá um e-mail com as instruções para a alteração.", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        bSeg.setIcon(R.mipmap.ic_launcher_bike_mobi);
+                        bSeg.create();
+                        bSeg.show();
+
+                    }
+                });
+
+                etEmail.setFocusable(false);
+                etNomeUsuario.setFocusable(false);
+
+
             }
             //login = loginDao.getLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
             if (login != null) {
                 etEmail.setText(login.getEmail());
                 etNomeUsuario.setText(login.getNomeUsuario());
-                etSenha.setText(login.getSenha());
+                etSenha.setText(SaveSharedPreference.getSenha(getApplicationContext()));
             }
         } else {
             perfil = new Perfil();
@@ -328,7 +366,13 @@ public class CadastroActivity extends AppCompatActivity implements View.OnClickL
             etEmail.setError("Este campo é obrigatório");
             validado = false;
         }
-
+        String password = etSenha.getText().toString();
+        if (password.isEmpty() || password.length() < 4) {
+            etSenha.setError("Mínimo 4 caracteres alfanuméricos");
+            validado = false;
+        } else {
+            etSenha.setError(null);
+        }
         if (TextUtils.isEmpty(etSenha.getText().toString())) {
             etSenha.setError("Este campo é obrigatório");
             validado = false;

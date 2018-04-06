@@ -226,6 +226,8 @@ public class JSONParser {
                     con.connect();
 
                     OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+
+                    //Log.d("BikeLog", "data: " + data);
                     out.write(outputData);
                     out.flush();
                     out.close();
@@ -248,6 +250,7 @@ public class JSONParser {
             if(callBack != null) {
                 callBack.setResponse(code, location);
             }
+
         }
     }
 
