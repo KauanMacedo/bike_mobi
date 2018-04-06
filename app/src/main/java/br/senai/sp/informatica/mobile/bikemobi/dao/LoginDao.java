@@ -71,16 +71,20 @@ public class LoginDao {
         try {
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(login);
-            JSONObject jsonSemSenha = new JSONObject(json);
-            jsonSemSenha.remove("senha");
-            json = jsonSemSenha.toString();
+            //JSONObject jsonSemSenha = new JSONObject(json);
+            //jsonSemSenha.remove("senha");
+            //json = jsonSemSenha.toString();
+            Log.d("BikeLog", "json:" + json);
             new JSONParser.Alterar(url + "atualizar", json, new JSONParser.LocationCallBack() {
                 @Override
                 public void setResponse(int code, String location) {
                     resposta[0] = code;
+                    Log.d("BikeLog", "url: " + url + "atualizar"+ " . code: " + code + ". location: " + location);
                 }
             }).execute();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Log.d("BikeLog", "Erro ao setLogin. Código de Retorno: " + code + ". URL: " + url + "buscarid/1" + ". Início do erro: "+ e);
+        }
         return resposta[0];
     }
 
@@ -97,7 +101,9 @@ public class LoginDao {
                     resposta[0] = code;
                 }
             }).execute();
-        } catch (Exception e){}
+        } catch (Exception e){
+            Log.d("BikeLog", "Erro ao postLogin. Código de Retorno: " + code + ". URL: " + url + "buscarid/1" + ". Início do erro: "+ e);
+        }
         return resposta[0];
     }
 
@@ -134,6 +140,42 @@ public class LoginDao {
             resposta = postLogin(login);
         }
         return resposta;
+    }
+
+    public int resetSenha(final int id, String senha){
+        final int[] resposta = {0};
+        try {
+            json = "{\"senha\": " + senha + "}";
+            new JSONParser.Incluir(url + "resetarsenha/" + id, json, new JSONParser.LocationAndDataCallBack() {
+               @Override
+               public void setResponse(int code, String location, String json) {
+                   Log.d("BikeLog", "url: " + url + "resetarsenha/" + id + " . code: " + code + ". json: " + json);
+                   resposta[0] = code;
+               }
+           }).execute();
+        }catch (Exception e) {
+            Log.d("BikeLog", "Erro ao resetSenha. Código de Retorno: " + code + ". URL: " + url + "buscarid/1" + ". Início do erro: "+ e);
+        }
+        return resposta[0];
+    }
+    public int alterarSenha(String email, String user){
+        final int[] resposta = {0};
+        try {
+            json = "{\"email\": " + email + ", \"nomeUsuario\": " + user + "}";
+            new JSONParser.Incluir(url + "esqueciminhasenha", json, new JSONParser.LocationAndDataCallBack() {
+                @Override
+                public void setResponse(int code, String location, String json) {
+                    Log.d("BikeLog", "url: " + url + "esqueciminhasenha. code: " + code + ". json: " + json);
+                    resposta[0] = code;
+                }
+            }).execute();
+        }catch (Exception e) {
+            Log.d("BikeLog", "Erro ao alterarSenha. Código de Retorno: " + code + ". URL: " + url + "buscarid/1" + ". Início do erro: "+ e);
+        }
+
+
+
+        return resposta[0];
     }
 
 }

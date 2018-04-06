@@ -87,7 +87,7 @@ public class PerfilActivity extends AppCompatActivity{
 
 
         } else {
-            Toast.makeText(this, "Não foi possível acessar informações de Perfil. Por favor, tente novamente mais tarde.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Não foi possível acessar informações de Perfil. Verifique sua internet e tente novamente mais tarde.", Toast.LENGTH_LONG).show();
             finish();
         }
     }
@@ -96,6 +96,7 @@ public class PerfilActivity extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ATUALIZA_PERFIL){
             getDadosPerfil();
+            Toast.makeText(getApplicationContext(), "Perfil atualizado.", Toast.LENGTH_LONG).show();
         }
     }
 }

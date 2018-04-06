@@ -218,6 +218,10 @@ public class MainActivity extends AppCompatActivity
                 displayLocation();
             }
         });
+
+        if (loginDao.getToken() == null){
+            loginDao.setToken(SaveSharedPreference.getToken(getApplicationContext()));
+        }
     }
 
 
@@ -257,6 +261,9 @@ public class MainActivity extends AppCompatActivity
         Intent intent;
         switch (id) {
             case R.id.nav_drawer_perfil:
+                Log.d("BikeLog", "Token dao: " + loginDao.getToken());
+                Log.d("BikeLog", "Token pref: " + SaveSharedPreference.getToken(getApplicationContext()));
+
                 intent = new Intent(this, PerfilActivity.class);
                 startActivity(intent);
                 break;
