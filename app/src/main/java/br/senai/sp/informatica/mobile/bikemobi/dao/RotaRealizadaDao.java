@@ -33,7 +33,7 @@ public class RotaRealizadaDao {
             String jsonParser = new JSONParser.Incluir(url + "cadastrar", json, new JSONParser.LocationAndDataCallBack() {
                 @Override
                 public void setResponse(int code, String location, String json) {
-                    //Log.d("BikeLog", "url: " + url + "cadastrar" + " . code: " + code + ". json: " + json + " location: " + location);
+                    Log.d("BikeLog", "url: " + url + "cadastrar" + " . code: " + code + ". json: " + json + " location: " + location);
                 }
             }).execute().get();
             //Log.d("BikeLog", "jsonParser: "+ jsonParser);
