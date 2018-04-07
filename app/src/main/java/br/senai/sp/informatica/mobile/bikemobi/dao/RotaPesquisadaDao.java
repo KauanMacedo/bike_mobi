@@ -33,6 +33,8 @@ public class RotaPesquisadaDao {
             ObjectMapper objectMapper = new ObjectMapper();
             json = objectMapper.writeValueAsString(rota);
 
+            Log.d("BikeLog", "jsonPesquisada: " + json);
+
             String jsonParser = new JSONParser.Incluir(url + "cadastrar", json, new JSONParser.LocationAndDataCallBack() {
                 @Override
                 public void setResponse(int code, String location, String json) {

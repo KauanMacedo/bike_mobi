@@ -59,6 +59,7 @@ import br.senai.sp.informatica.mobile.bikemobi.model.Avaliacao;
 import br.senai.sp.informatica.mobile.bikemobi.model.RotaPesquisada;
 import br.senai.sp.informatica.mobile.bikemobi.model.RotaRealizada;
 import br.senai.sp.informatica.mobile.bikemobi.util.PermissionUtils;
+import br.senai.sp.informatica.mobile.bikemobi.util.SaveSharedPreference;
 
 public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -254,7 +255,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                     rotaPesquisada.setOrigemLng(results.routes[overview].legs[overview].startLocation.lng);
                     rotaPesquisada.setPolylinePoints(String.valueOf(results.routes[overview].overviewPolyline));
 
-                    rotaPesquisada.setIdLogin(idLogin);
+                    rotaPesquisada.setIdLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
                     rotaPesquisada.setCriadoEm(Calendar.getInstance().getTime());
 
                     idRotaPesq = rotaPesqDao.postRotaPesquisada(rotaPesquisada);
@@ -454,11 +455,13 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                                 public void onClick(DialogInterface dialog, int which) {
                                     avaliar();
                                     finish();
+
                                 }
                             });
                             bSeg.setPositiveButton("Compartilhar Passeio", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    avaliar();
                                     Intent intent = new Intent(NavActivity.this, ShareActivity.class);
                                     intent.putExtra("origem", rotaPesquisada.origemEnd);
                                     intent.putExtra("destino", destino);
@@ -509,7 +512,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
                         rotaReal.setDuracaoString(duracao + " mins");
                         rotaReal.setDuracaoInt((int)duracao);
                         rotaReal.setKilometros((int)kilometragem);
-                        rotaReal.setIdLogin(idLogin);
+                        rotaReal.setIdLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
                         rotaReal.setIdRotaPesquisada(idRotaPesq);
 
                         idRotaReal = rotaRealDao.postRotaReal(rotaReal);
@@ -602,7 +605,7 @@ public class NavActivity extends FragmentActivity implements OnMapReadyCallback,
         avaliacao.setAvTrajeto(avalTraj);
         avaliacao.setAvSeguranca(avalSeg);
         avaliacao.setIdRotaRealizada(idRotaReal);
-        avaliacao.setIdLogin(idLogin);
+        avaliacao.setIdLogin(Integer.parseInt(SaveSharedPreference.getId(getApplicationContext())));
 
         avaliacaoDao.postAvaliacao(avaliacao);
     }
